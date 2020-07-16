@@ -24,28 +24,20 @@
 
 有些公司是将 `workerId` 拆分为 `workerId`、`dataId`，各占 `5bit`，当然同样也存在上面的两个问题。
 
-</br>
-
 ## **UML图**
 
 在 `consistency` 模块中定义了一个 `IdGenerator` 接口，其实现与管理器在 `core` 目录下，但是既然在 `consistency` 模块看到了这个接口，那么我们还是来聊一下这个 `ID 生成器` ，它的 `UML` 图如下：
 
 ![](../../images/screenshot_1594797735533.png)
 
-</br>
-
 - `SnowFlowerIdGenerator` 实现了 `IdGenerator` 接口
 - `IdGeneratorManager` 由 `IdGenerator` 组合并负责创建 `SnowFlowerIdGenerator` 实现类
 
 可以从上图很清晰的看到在 `consistency` 块中定义了一 `ID 生成器接口` 并且通过 `SnowFlowerIdGenerator` 实现了这个接口，然后使用 `IdGeneratorManager` 来统一管理。
 
-</br>
-
 ## **Nacos中的雪花算法**
 
 这一小节，我们来分析一下在 `nacos` 中，雪花算法是如何实现的（重点关注于它是如何解决上面说的那两个问题的）
-
-</br>
 
 ### **IdGenerator接口**
 
@@ -53,11 +45,7 @@
 
 ![](../../images/screenshot_1594799843737.png)
 
-</br>
-
 接口相对比较简单，非常常规的 `IdGenerator` 的定义（从这个设计上也可以看出以后 `Nacos` 可能可能会采用其他的 `ID 生成器` 的实现），核心还是在其实现类 `SnowFlowerIdGenerator` 上
-
-</br>
 
 ### **SnowFlowerIdGenerator实现类**
 
@@ -208,11 +196,7 @@ public class SnowFlowerIdGenerator implements IdGenerator {
 }
 ```
 
-</br>
-
 __可以看出，`Nacos` 采用了 `10bit workerId` 的方式__，那么我们接下来就看下它是如何处理下面几个问题的，搞懂下面 `四个问题` 基本上也就搞懂雪花算法的生成了
-
-</br>
 
 #### **问题一：IdGenerator初始化过程是怎样的?**
 
@@ -283,8 +267,6 @@ public IdGeneratorManager() {
 
 这样，所有的 `IdGenerator` 就都完成了初始化并纳入到 `IdGeneratorManager` 中管理
 
-</br>
-
 #### **问题二：如何防止时钟回拨？**
 
 在每次通过同步方法 `nextId()` 生成 `ID` 时，会获取当前系统时间并检查本次时间遇上一次生成时间的值对比：
@@ -302,8 +284,6 @@ public IdGeneratorManager() {
 // 省略其他代码 ...
 ```
 
-</br>
-
 #### **问题三：如何获取下一个ID?**
 
 具体使用体现在完成 `IdGenerator` 注册 之后，直接通过同步方法 `nextId()` 调用接口（参考 `EmbeddedStoragePersistServiceImpl` 类），如下：
@@ -316,8 +296,6 @@ public IdGeneratorManager() {
     
 // 省略其他代码 ...
 ```
-
-</br>
 
 #### **问题四：如何防止同一序列内生成的ID不重复?**
 
@@ -374,17 +352,13 @@ private long waitUntilNextTime(long lastTimestamp) {
 // 省略其他代码 ...
 ```
 
-</br></br>
-
-### **IdGeneratorManager 精讲**
+</br>### **IdGeneratorManager 精讲**
 
 除了需要搞清楚上面四个问题之外我们还需要搞清楚 `IdGeneratorManager` 是如何工作的，因为 `SnowFlowerIdGenerator` 从本质上来讲只是一个实现类（工具类），它是由 `IdGeneratorManager` 这个类进行管理的，因此我们要清楚 `Nacos` 是如何运用雪花算法的还需要先搞清楚 `IdGeneratorManager` 的如下几个问题：
 
 - `IdGeneratorManager`的组成、作用？是如何管理和维护 `IdGenerator` 的？
 - `IdGenerator` 是何时、如何注册到 `IdGeneratorManager` 中的？
 - `IdGenerator` 如何使用？
-
-</br>
 
 ## **问题一：IdGeneratorManager剖析（组成、作用、维护管理）？**
 
@@ -476,8 +450,6 @@ public class IdGeneratorManager {
 }
 ```
 
-</br>
-
 ## **问题二：IdGenerator何时、何地注册？**
 
 `EmbeddedStoragePersistServiceImpl` 这个类提供了 `register` 方法来让所有的 `IdGenerator` 在容器启动中就完成初始化并纳入它的管理（本地缓存），具体体现在这个类中的 `init()` 方法了，如下：
@@ -515,11 +487,7 @@ public class EmbeddedStoragePersistServiceImpl implements PersistService {
 }
 ```
 
-</br>
-
-如果你想要在本地通过 `IDE` 调试看看 `EmbeddedStoragePersistServiceImpl` 类的初始化执行过程，那么就必须让  `@Conditional(value = ConditionOnEmbeddedStorage.class)` 触发。换句话说，要使得 `ConditionOnEmbeddedStorage` 这个条件类 返回 `true`</br></br>
-
-接下来我们看看实现了 `Codition` 接口的 `ConditionOnEmbeddedStorage` 代码：
+如果你想要在本地通过 `IDE` 调试看看 `EmbeddedStoragePersistServiceImpl` 类的初始化执行过程，那么就必须让  `@Conditional(value = ConditionOnEmbeddedStorage.class)` 触发。换句话说，要使得 `ConditionOnEmbeddedStorage` 这个条件类 返回 `true`</br>接下来我们看看实现了 `Codition` 接口的 `ConditionOnEmbeddedStorage` 代码：
 
 ```java
 // 条件注解实现类
@@ -548,15 +516,11 @@ public class ConditionOnEmbeddedStorage implements Condition {
 
 看到这里我们就知道要让这个条件注解生效从而引发 `EmbeddedStoragePersistServiceImpl` 的初始化就必启用嵌入式存储，就如上面代码中的注释描述一样：__如果启用嵌入式存储则返回 true（启用条件：单机模式运行、不配置数据库信息）__
 
-</br>
-
 **补充：如何使IdGenerator完成初始化注册？**
 
 > *如何调试方法：以单机模式启动、不配置数据库，启动成功后会看到这样的日志输出：`Nacos started successfully in stand alone mode. use embedded storage`*
 
 看到这里我们也可以思考一个问题：为什么 `Nacos` 要设计为通过嵌入式存储时采取初始化注册 `ID 生成器` 呢（提示：如果使用 `DB` 的话 `ID` 策略是怎样的），实际上还有及各类也是用了类似的注解（更多类在 `com\alibaba\nacos\config\server\service\repository\embedded` 下），大家可以作为拓展先自行去调试、研究下
-
-</br>
 
 **核心：isEmbeddedStorage的值是如何获取的？**
 
@@ -578,8 +542,6 @@ public class ConditionOnEmbeddedStorage implements Condition {
 
 // 省略其他代码 ...
 ```
-
-</br>
 
 > **额外：spring.factories 机制**
 
@@ -635,8 +597,6 @@ public class StandaloneProfileApplicationListener
     }
 ```
 
-</br>
-
 ## **问题三：IdGenerator使用方法**
 
 > 其实前面已经讲了如何使用，这里再重新描述一下
@@ -653,11 +613,8 @@ public class StandaloneProfileApplicationListener
     long hisId = idGeneratorManager.nextId(RESOURCE_CONFIG_HISTORY_ID);
 ```
 
-</br>
-
 ## Reference
 - [shariding-JDBC-snowflake](http://www.cluozy.com/home/hexo/2018/08/11/shariding-JDBC-snowflake/)
 - [spring.factories](https://www.cnblogs.com/itplay/p/9927892.html)
 
-</br></br>
-
+</br>

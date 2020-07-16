@@ -5,13 +5,9 @@
 - 类图中各个类之间的关系
 - 看懂类图中各个类之间的线条、箭头含义
 
-</br>
-
 ## **类之间的关系**
 
 只要你能看懂类图中各个类之间的线条、箭头代表什么意思后，也就足够应对日常的工作和交流。
-
-</br>
 
 **泛化关系（generalization）**
 
@@ -21,9 +17,7 @@
 
 ![](../images/screenshot_1594803009203.png)
 
-</br></br>
-
-**实现关系（realize）**
+</br>**实现关系（realize）**
 
 > 实现
 
@@ -31,9 +25,7 @@
 
 ![](../images/screenshot_1594803207527.png)
 
-</br></br>
-
-**聚合关系（aggregation）**
+</br>**聚合关系（aggregation）**
 
 > 聚合，弱依赖
 
@@ -41,9 +33,7 @@
 
 ![](../images/screenshot_1594803216517.png)
 
-</br></br>
-
-**组合关系（composition）**
+</br>**组合关系（composition）**
 
 > 组合，强依赖
 
@@ -51,9 +41,7 @@
 
 ![](../images/screenshot_1594803333310.png)
 
-</br></br>
-
-**关联关系（association）**
+</br>**关联关系（association）**
 
 > 关联
 
@@ -61,9 +49,7 @@
 
 ![](../images/screenshot_1594803403719.png)
 
-</br></br>
-
-**依赖关系（dependency）**
+</br>**依赖关系（dependency）**
 
 > 依赖
 
@@ -73,6 +59,4 @@
 
 
 
-</br></br>
-
-
+</br>

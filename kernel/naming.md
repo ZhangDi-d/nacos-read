@@ -2,8 +2,6 @@
 
 > 再来看下 `naming` 模块的项目代码组织结构
 
-</br>
-
 ```
 ➜  naming git:(feature-1.3.1) tree -I "test|*.iml" -d
 └── src

@@ -6,9 +6,7 @@
 
 ![](../images/screenshot_1594532157635.png)
 
-可以看到除了 `PasswordEncoderUtil` 是一个测试类之外，启动类有 6 个，但是我们应该如何去正常启动 Nacos 服务呢？</br></br>
-
-**IDEA 中启动 Nacos**
+可以看到除了 `PasswordEncoderUtil` 是一个测试类之外，启动类有 6 个，但是我们应该如何去正常启动 Nacos 服务呢？</br>**IDEA 中启动 Nacos**
 
 这里直接给结论吧，只需要启动 `Nacos` 这一个应用程序即可（注意需要添加 VM options 以单机模式启动 `-Dnacos.standalone=true` ），如下：
 
@@ -22,17 +20,13 @@ Nacos started successfully in stand alone mode. use external storage
 ...
 ```
 
-</br></br>
-
-**Nacos 界面：**
+</br>**Nacos 界面：**
 
 最终的效果如下图所示（注意：这里是同时部署了`服务发现与注册中心`、`配置中心`）：
 
 ![](../images/screenshot_1594534120232.png)
 
-</br></br>
-
-**如何单独部署注册中心或配置中心？**
+</br>**如何单独部署注册中心或配置中心？**
 
 如果你需要单独部署 `服务发现与注册中心` 或 `配置中心` 则可以通过增加启动参数来达到你的需求：
 
@@ -41,6 +35,4 @@ Nacos started successfully in stand alone mode. use external storage
 
 大家也可以参考源码中的 `${your workspace}/nacos/distribution/bin` 下的 `startup.sh` 中第 `84` 行开始的 `JVM Configuration` 去查看
 
-</br></br>
-
-
+</br>

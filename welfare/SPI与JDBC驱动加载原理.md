@@ -21,8 +21,6 @@
 
 看到这里还是有点懵？没关系，下面我们通过一个几乎你们天都在接触的东东来说明下 `SPI` 机制
 
-</br>
-
 ## **JDBC驱动加载中的SPI机制**
 
 看到这个标题有没有一种恍然大悟的感觉，我猜测你或多或少都了解过一些关于数据库驱动的知识，尤其是以前学习 JDBC 时一定看过关于 Java 提供了一个 Driver 接口，其他数据库厂商各自去进行这个接口的实现这样的描述。我们先来看下 JDBC 驱动结构模型：
@@ -58,7 +56,8 @@
                 // 2.1 获取connection
                 Connection conn = DriverManager.getConnection(url,username,password);
 
-                // 2.2 或者使用下面方式获取 connection
+                // 2.2 或者使用
+下面方式获取 connection
                /* 
                  Properties info = new Properties();
                  info.put("user", username);
@@ -75,9 +74,8 @@
         }
 ```
 
-从上面的 JDBC 连接数据库中的 `Class.forName(driverName);` 中我们能够知道这个方法实际上是将类进行初始化并加载到 JVM 中（敲黑板：这里涉及了类加载机制的知识点），那么这里和 JDBC 驱动加载貌似没有半毛钱关系啊？带着这个疑问，继续往下看。
-
-</br>
+从上面的 JDBC 连接数据库中的 `Class.forName(driverName);
+` 中我们能够知道这个方法实际上是将类进行初始化并加载到 JVM 中（敲黑板：这里涉及了类加载机制的知识点），那么这里和 JDBC 驱动加载貌似没有半毛钱关系啊？带着这个疑问，继续往下看。
 
 ## **JDBC驱动加载原理**
 
@@ -136,8 +134,6 @@ static {
 
 - 方式一是直接通过读取系统变量的方式
 - 方式二是通过 `ServiceLoader` 加载的方式
-
-</br>
 
 **JDBC驱动加载方式一、方式二剖析**
 
@@ -200,8 +196,6 @@ private static void loadInitialDrivers() {
 
 第一种加载驱动的方式很好理解，是从系统环境变量中获取 `jdbc.drivers` 指向的类路径，后续就是根据这个类路径通过 ClassLoader 去初始化加载驱动了；下面我们着重于分析下第二种加载驱动的方式，即通过 ServiceLoader 加载驱动的的过程是怎样的。
 
-</br>
-
 **ServiceLoader讲解**
 
 我们一步一步看源码可以发现，通过上面的 `ServiceLoader.load(Driver.class);` 方法实际上并没有立即去加载驱动，而是返回了 `ServiceLoader<>(service, loader);`，对应 ServiceLoader 构造器代码如下：
@@ -226,8 +220,6 @@ private static void loadInitialDrivers() {
 ```
 
 通过 ServiceLoader 方式方式加载驱动最后获得了一个惰性迭代器，然后调用 `hasNext()` 方法，最终会调用到惰性迭代器 `LazyIterator` 的 `hasNextService()` 方法，然后再通过 ClassLoader 将类装载到 JVM 中完成驱动的初始化、加载！
-
-</br>
 
 需要值得注意的是：__在 ServiceLoader 中有一个静态变量  PREFIX，这个变量指向的就是 `META-INF/services/`，在 hasNextService() 方法中会加上这个 PREFIX 拼接出类路径地址然后由 Classloader 加载指定的驱动！__，具体代码如下：
 
@@ -274,8 +266,6 @@ private static void loadInitialDrivers() {
         return system.getResources(name);
     }
 ```
-
-</br>
 
 **DriverManager管理Driver、Connection**
 
@@ -342,15 +332,11 @@ private static void loadInitialDrivers() {
     }
 ```
 
-</br>
-
 ## **JDBC驱动加载原理小结**
 
 这里补充一下： **在JDBC 4.0之后实际上我们不需要再调用Class.forName来加载驱动程序了**，因此我们可以在自己选择的第三方数据库厂商提供的 connector jar 包下的 `META-INF/services` 目录下可以看到一个 `java.sql.Driver` 的文件，如下：
 
 ![](../images/screenshot_1594879455481.png)
-
-</br>
 
 在我们集成第三方数据源时，程序启动后，经过一系列初始化后会 `加载数据源配置`（我使用的是 `HikariCP` 数据源），此时会在 `HikariConfig` 中的 `setDriverClassName()` 方法中有这样一行实例化驱动的代码：
 
@@ -369,11 +355,7 @@ private static void loadInitialDrivers() {
 
 ![](../images/screenshot_1594887286726.png)
 
-</br>
-
 这样，我们知道了 __驱动在什么时候会被自动加载__，而这种自动加载驱动的技术方案就叫 `SPI`
-
-</br>
 
 ## **Reference**
 

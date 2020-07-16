@@ -12,8 +12,6 @@
 
 点击链接查看 [NamingService](https://github.com/rexlin600/nacos/blob/feature-1.3.1/api/src/main/java/com/alibaba/nacos/api/naming/NamingService.java)  提供的接口以了解更多详细信息。
 
-</br>
-
 ## **NamingService 创建浅析**
 
 源码中 `NamingService` 是通过 [api 模块](https://github.com/rexlin600/nacos/blob/feature-1.3.1/api) 中的 [NamingFactory](https://github.com/rexlin600/nacos/blob/feature-1.3.1/api/src/main/java/com/alibaba/nacos/api/naming/NamingFactory.java) 创建的，大致流程如下：
@@ -23,8 +21,6 @@
 3. 然后通过 `NamingService` 实例调用其提供的方法
 
 本文后续会重点介绍第 `2` 步，剖析 `NamingService` 的创建过程；创建 `NamingService` 的示例程序可以参考 [NamingExample](https://github.com/rexlin600/nacos/blob/feature-1.3.1/example/src/main/java/com/alibaba/nacos/example/NamingExample.java) 的代码（运行 `NamingExample` 需要启动 `Nacos`，可参考上一章 `IDEA 调试` 去启动 `Nacos`）。
-
-</br>
 
 ## **源码剖析**
 

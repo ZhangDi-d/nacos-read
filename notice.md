@@ -10,8 +10,6 @@
 * 阅读项目提供的 example、test 等模块，看是否包含核心功能、亮点实现的简单示例，如果有自己可以尝试跑一下
 * 重点攻克相应模块的核心源码（注释、断点调试）
 
-</br>
-
 ## **版本选择**
 
 目前笔者主要使用的还是 `SpringBoot 2.1.X` 以及 `SpringCloud Greenwich` 版本；我的环境如下：
@@ -54,5 +52,4 @@ To https://github.com.cnpmjs.org/rexlin600/nacos.git
 Branch 'feature-1.3.1' set up to track remote branch 'feature-1.3.1' from 'origin'.
 ```
 
-</br></br>
-
+</br>

@@ -6,7 +6,5 @@
 
 ![](../images/screenshot_1594891512251.png)
 
-</br>
-
 ## **SpringBoot **
 

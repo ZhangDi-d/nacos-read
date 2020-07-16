@@ -8,8 +8,6 @@
 
 实际上这个元组也叫做 `Triplet`，即三元组；类似的，我们可以发散思考是不是意味着提供了 `N` 个元素的元组叫做 `N元组` 呢？
 
-</br>
-
 ## **元组作用及使用场景**
 
 元组数据实际上就是可以用来存储一组不同元素类型的容器，并且需要注意的是元组一旦定义之后就是不可变的了，下面将二元组的时候会详细剖析。
@@ -20,16 +18,12 @@
 - 因为元组不可变，所以我们可以用来`返回一组不可变的不同元素`
 - 此外就是参考元组 `Tuple` 定义的方法，比如：`遍历`、`排序`、`筛选` 等（详见 `javatuples` 包下源码 [Tuple.java](https://github.com/javatuples/javatuples/blob/master/src/main/java/org/javatuples/Tuple.java)）
 
-</br>
-
 ## **与数组/列表的对比**
 
 | 类型 | 特点 |
 | --- | --- |
 | 数组/列表 | 可以包含`任意数量` 且 `元素类型一致` 的元素 |
 | 元组 | 只能包含 `固定数量` 并且 `类型不限` 的元素、元组中元素 `类型安全` |
-
-</br>
 
 ## **javatuples 包**
 
@@ -60,8 +54,6 @@ Triplet<A, B, C> triplet = new Triplet<A, B, C>(value1, value2, value3);
 ```
 
 我们先来剖析一下元组（tuple）、二元组（Pair）在 `javatuples` 依赖包中是怎样的
-
-</br>
 
 ### **Tuple 与 Pair**
 
