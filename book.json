@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "highlight",
+    "comment",
+    "image-zoom",
+    "copy-code",
+    "copyright"
+  ],
+  "pluginsConfig": {
+    "theme-default": {
+      "logo": {}
+    }
+  }
+}
