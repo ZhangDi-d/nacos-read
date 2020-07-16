@@ -17,7 +17,7 @@
 
 ![](../images/screenshot_1594803009203.png)
 
-</br>**实现关系（realize）**
+**实现关系（realize）**
 
 > 实现
 
@@ -25,7 +25,7 @@
 
 ![](../images/screenshot_1594803207527.png)
 
-</br>**聚合关系（aggregation）**
+**聚合关系（aggregation）**
 
 > 聚合，弱依赖
 
@@ -33,7 +33,7 @@
 
 ![](../images/screenshot_1594803216517.png)
 
-</br>**组合关系（composition）**
+**组合关系（composition）**
 
 > 组合，强依赖
 
@@ -41,7 +41,7 @@
 
 ![](../images/screenshot_1594803333310.png)
 
-</br>**关联关系（association）**
+**关联关系（association）**
 
 > 关联
 
@@ -49,7 +49,7 @@
 
 ![](../images/screenshot_1594803403719.png)
 
-</br>**依赖关系（dependency）**
+**依赖关系（dependency）**
 
 > 依赖
 
@@ -59,4 +59,3 @@
 
 
 
-</br>

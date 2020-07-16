@@ -4,7 +4,7 @@
 
 ![arch](../images/screenshot_1594476906139.png)
 
-</br>## **逻辑架构及其组件介绍**
+## **逻辑架构及其组件介绍**
 
 > 阿里 Nacos 逻辑架构
 
@@ -58,4 +58,3 @@
 
 好消息是目前阿里云提供了免费的 `Nacos` 公有云模式，可以去 [Nacos ACM](https://www.aliyun.com/product/acm) 使用 `Nacos` 的免费公有云服务，但是建议用于测试环境，生产还是自己搭建或使用阿里云企业级 `Nacos` 服务
 
-</br>

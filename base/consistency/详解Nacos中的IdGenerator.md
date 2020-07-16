@@ -352,7 +352,7 @@ private long waitUntilNextTime(long lastTimestamp) {
 // 省略其他代码 ...
 ```
 
-</br>### **IdGeneratorManager 精讲**
+### **IdGeneratorManager 精讲**
 
 除了需要搞清楚上面四个问题之外我们还需要搞清楚 `IdGeneratorManager` 是如何工作的，因为 `SnowFlowerIdGenerator` 从本质上来讲只是一个实现类（工具类），它是由 `IdGeneratorManager` 这个类进行管理的，因此我们要清楚 `Nacos` 是如何运用雪花算法的还需要先搞清楚 `IdGeneratorManager` 的如下几个问题：
 
@@ -487,7 +487,7 @@ public class EmbeddedStoragePersistServiceImpl implements PersistService {
 }
 ```
 
-如果你想要在本地通过 `IDE` 调试看看 `EmbeddedStoragePersistServiceImpl` 类的初始化执行过程，那么就必须让  `@Conditional(value = ConditionOnEmbeddedStorage.class)` 触发。换句话说，要使得 `ConditionOnEmbeddedStorage` 这个条件类 返回 `true`</br>接下来我们看看实现了 `Codition` 接口的 `ConditionOnEmbeddedStorage` 代码：
+如果你想要在本地通过 `IDE` 调试看看 `EmbeddedStoragePersistServiceImpl` 类的初始化执行过程，那么就必须让  `@Conditional(value = ConditionOnEmbeddedStorage.class)` 触发。换句话说，要使得 `ConditionOnEmbeddedStorage` 这个条件类 返回 `true`接下来我们看看实现了 `Codition` 接口的 `ConditionOnEmbeddedStorage` 代码：
 
 ```java
 // 条件注解实现类
@@ -617,4 +617,3 @@ public class StandaloneProfileApplicationListener
 - [shariding-JDBC-snowflake](http://www.cluozy.com/home/hexo/2018/08/11/shariding-JDBC-snowflake/)
 - [spring.factories](https://www.cnblogs.com/itplay/p/9927892.html)
 
-</br>

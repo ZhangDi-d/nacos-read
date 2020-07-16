@@ -361,4 +361,3 @@ private static void loadInitialDrivers() {
 
 - [Oracle DriverManager](https://docs.oracle.com/javase/6/docs/api/java/sql/DriverManager.html)
 
-</br></br>
