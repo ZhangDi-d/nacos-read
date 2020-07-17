@@ -16,6 +16,7 @@
   * [模块 consistency](base/consistency/README.md)
     * [问题列表](base/consistency/issue-list.md)
     * [详解Nacos中的IdGenerator](base/consistency/idgenerator-in-nacos.md)
+    * [深入理解 Protobuf](base/consistency/protobuf.md)
   * [模块 api](base/api/README.md)
     * [问题列表](base/api/issue-list.md)
   * [模块 common](base/common/README.md)
