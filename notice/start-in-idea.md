@@ -1,3 +1,7 @@
+---
+description: Better good neighbours near than relations far away.
+---
+
 # IDE 调试
 
 > 阅读源码，首要的是下载源码，其次就是要能够在本地调试，下面介绍如何在 IDEA 启动 nacos 的服务

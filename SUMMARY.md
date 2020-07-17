@@ -29,7 +29,7 @@
     * [问题列表](kernel/kernel-2/issue-list.md)
   * [模块 naming](kernel/kernel-3/README.md)
     * [问题列表](kernel/kernel-3/issue-list.md)
-    * [问题列表](kernel/kernel-3/naming-service-analysis.md)
+    * [NamingService 创建浅析](kernel/kernel-3/naming-service-analysis.md)
   * [模块 config](kernel/kernel-4/README.md)
     * [问题列表](kernel/kernel-4/issue-list.md)
   * [模块 console](kernel/kernel-5/README.md)
@@ -43,5 +43,4 @@
   * [元组Tuple](welfare/tuple.md)
   * [极简UML](welfare/easy-uml.md)
   * [SPI与JDBC驱动加载原理](welfare/spi-and-jdbc-auto-loading.md)
-  * [详解spring.factories](welfare/spring-factories-in-detail.md)
 

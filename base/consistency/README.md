@@ -1,3 +1,7 @@
+---
+description: Big mouthfuls ofter choke.
+---
+
 # 模块 consistency
 
 > consistency 模块代码层次结构

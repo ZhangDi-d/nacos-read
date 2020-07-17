@@ -1,3 +1,7 @@
+---
+description: Difficult circumstances serve as a textbook of life for people.
+---
+
 # SPI与JDBC驱动加载原理
 
 `SPI`，即 `Service Provider Interface`，是 `Java` 提供的一套用于被第三方实现或者扩展的 `API`，他可以用来启用框架扩展和替换组件，整体机制如下图：

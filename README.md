@@ -1,5 +1,5 @@
 ---
-description: nacos source code read，nacos description
+description: nacos source code read
 ---
 
 # Introduction

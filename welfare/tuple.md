@@ -1,3 +1,9 @@
+---
+description: >-
+  Four short words sum up what has lifted most successful individuals above the
+  crowd: a little bit more.
+---
+
 # 元组Tuple
 
 元组（tuples），可以看成是一个数组或列表，与数组或列表不同的地方在于一个 `tuple` 是一个相互之间不需要任何关联的对象的序列，比如下面的序列就可以看成是一个具有三个元素的 `tuple`：

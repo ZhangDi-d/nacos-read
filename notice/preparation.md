@@ -1,3 +1,7 @@
+---
+description: Better an open enemy than a false friend.
+---
+
 # 准备工作
 
 阅读源码一般不太可能通读，都是挑一些重点功能、实现区阅读，建议可以按照如下方式去阅读：

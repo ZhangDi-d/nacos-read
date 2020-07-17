@@ -1,3 +1,7 @@
+---
+description: 'Be swift to hear, slow to speak.'
+---
+
 # 准备与须知
 
 在阅读源码之前建议 `fork` `Nacos` 项目并选择好你要阅读的 `Nacos`版本，然后重新拉取分支。

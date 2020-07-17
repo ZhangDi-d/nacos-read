@@ -1,3 +1,7 @@
+---
+description: Believe not all that you see nor half what you hear.
+---
+
 # 构建并启动
 
 > 注意：这里讲构建与启动是为了照顾先要体验的同学，后面会将如何通过 IDEA 去进行调试！

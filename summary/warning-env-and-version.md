@@ -1,3 +1,7 @@
+---
+description: 'Be just to all, but trust not all.'
+---
+
 # 防踩坑：环境与版本
 
 新手入坑 `Nacos`，一定要注意环境要求以及知道如何选择合适的 `Nacos` 版本，防止踩坑！（尤其是在项目集成 `Nacos` 时不清楚各个版本与 `SpringBoot`、`SpringCloud` 的关系则很容易踩坑，遇到一些奇奇怪怪的问题）

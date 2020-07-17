@@ -1,3 +1,7 @@
+---
+description: All things in their being are good for something.
+---
+
 # 极简UML
 
 注意：本文不会将 `UML` 的各种元素都提到，本文将着重于如下几个点的介绍：
