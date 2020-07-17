@@ -33,10 +33,10 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 
 ### Protobuf 语法
 
-> 详细语法格式请参考文末提供的官方指南
+> 😎 详细语法格式请参考文末提供的官方指南，这里仅以 Nacos 中的 Data.proto 为例，大家能理解这个文件的内容即可
 
 {% tabs %}
-{% tab title="定义一个消息" %}
+{% tab title="消息" %}
 ```text
 // 使用 proto3 版本，默认是使用 proto2 版本协议
 syntax = "proto3";
@@ -74,24 +74,110 @@ message Response {
 ```
 {% endtab %}
 
-{% tab title="Second Tab" %}
-```text
-syntax = "proto3";
+{% tab title="定义消息类型" %}
+```
 
+```
+{% endtab %}
+
+{% tab title="类型参照表" %}
+```
+见下图
+```
+{% endtab %}
+
+{% tab title="默认值" %}
+```
+string：默认空字符串
+bytes：默认空 byte 
+bools：默认 false
+numeric：默认值为 0
+enums：默认值是第一个定义的枚举值，必须为0
+message fileds：取决于不同的语言，详情见官方文档
+```
+{% endtab %}
+
+{% tab title="枚举值" %}
+```
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
   int32 result_per_page = 3;
+  enum Corpus {
+    UNIVERSAL = 0; // 每个枚举定义都必须包含一个映射为零的常量作为其第一个元素。
+    WEB = 1;
+    IMAGES = 2;
+    LOCAL = 3;
+    NEWS = 4;
+    PRODUCTS = 5;
+    VIDEO = 6;
+  }
+  Corpus corpus = 4;
 }
+
+ enum EnumAllowingAlias {
+    option allow_alias = true; // 可以通过这个选项给枚举赋相同的值，如下
+    UNKNOWN = 0;
+    STARTED = 1;
+    RUNNING = 1;
+  }
+  
+enum Foo {
+  reserved 2, 15, 9 to 11, 40 to max;  // 避免直接移除、删除枚举值，使用 reserved 可防止未来出错
+  reserved "FOO", "BAR";
+}
+```
+{% endtab %}
+
+{% tab title="可选条件" %}
+```
+// 定义生成 Java 文件的路径
+option java_package = "com.example.foo";
+
+// 诸如 messsage、enums、services 等在包路径下分别生成代码
+option java_multiple_files = true;
+
+// 要生成的 java 类文件名称
+option java_outer_classname = "Ponycopter";
+
+// 生成文件的方式；
+// SPEED (default)：对消息类型进行序列化，解析和执行其他常见操作，已高度优化
+// CODE_SIZE：生成最少的类，并将依赖于基于反射的共享代码来实现序列化，解析和其他各种操作
+// LITE_RUNTIME：生成仅依赖于“精简版”运行时库（libprotobuf-lite而不是libprotobuf）的类
+option optimize_for = CODE_SIZE;
+
+// 字段选项 deprecated，表明字段已被弃用，在 Java 中会生成 @Deprecated 注解
+int32 old_field = 6 [deprecated = true];
+```
+{% endtab %}
+
+{% tab title="生成代码" %}
+```
+// The Protocol Compiler is invoked as follows:
+protoc --proto_path=_IMPORT_PATH_ \
+    --cpp_out=_DST_DIR_ \
+    --java_out=_DST_DIR_ \
+    --python_out=_DST_DIR_ \
+    --go_out=_DST_DIR_ \
+    --ruby_out=_DST_DIR_ \
+    --objc_out=_DST_DIR_ \
+    --csharp_out=_DST_DIR_ \
+    _path/to/file_.proto
+    
+// Java 生成代码
+protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
+
+// 示例
+protoc --proto_path=./ --java_out=./ ./Data.proto
 ```
 {% endtab %}
 {% endtabs %}
 
-{% hint style="success" %}
-Protobuf 中指定的类型与对应语言生成的数据类型参照表
-{% endhint %}
+> Protobuf 中指定的类型与对应语言生成的**数据类型参照表**（简版）
 
 ![protobuff-type](../../.gitbook/assets/protobuff-type.png)
+
+
 
 ### Protobuf 之 Java Tutorial
 
