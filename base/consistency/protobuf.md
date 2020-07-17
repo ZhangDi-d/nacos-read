@@ -91,23 +91,7 @@ message SearchRequest {
 Protobuf 中指定的类型与对应语言生成的数据类型参照表
 {% endhint %}
 
-| .proto Type | Notes | Java Type | Python Type\[2\] | Go Type |
-| :--- | :--- | :--- | :--- | :--- |
-| double |  | double | float | float64 |
-| float |  | float | float | float32 |
-| int32 | 使用可变长度编码。负数编码效率低下–如果您的字段可能具有负值，请改用sint32 | int | int | int32 |
-| int64 | 使用可变长度编码。负数编码效率低下–如果您的字段可能具有负值，请改用sint64 | long | int/long\[3\] | int64 |
-| uint32 | 使用可变长度编码 | int\[1\] | int/long\[3\] | uint32 |
-| uint64 | 使用可变长度编码 | long\[1\] | int/long\[3\] | uint64 |
-| sint32 | 使用可变长度编码。有符号的int值。与常规int32相比，它们更有效地编码负数 | int | int | int32 |
-| sint64 | 使用可变长度编码。有符号的int值。与常规int64相比，它们更有效地编码负数 | long | int/long\[3\] | int64 |
-| fixed32 | 始终为四个字节。如果值通常大于228，则比uint32更有效 | int\[1\] | int/long\[3\] | uint32 |
-| fixed64 | 始终为八个字节。如果值通常大于256，则比uint64更有效 | long\[1\] | int/long\[3\] | uint64 |
-| sfixed32 | 始终为四个字节 | int | int | int32 |
-| sfixed64 | 始终为八个字节 | long | int/long\[3\] | int64 |
-| bool |  | boolean | bool | bool |
-| string | 字符串必须始终包含UTF-8编码或7位ASCII文本，并且不能超过232 | String | str/unicode\[4\] | string |
-| bytes | 可以包含不超过232个任意字节序列 | ByteString | str | \[\]byte |
+![protobuff-type](../../.gitbook/assets/protobuff-type.png)
 
 ### Protobuf 之 Java Tutorial
 
