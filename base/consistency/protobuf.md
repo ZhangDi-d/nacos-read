@@ -33,17 +33,81 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 
 ### Protobuf 语法
 
+> 详细语法格式请参考文末提供的官方指南
+
 {% tabs %}
 {% tab title="定义一个消息" %}
+```text
+// 使用 proto3 版本，默认是使用 proto2 版本协议
+syntax = "proto3";
 
+// 生成多个 Java 文件，如果生成单个文件更加的难以阅读
+option java_multiple_files = true;
+// 生成的文件保存的路径
+option java_package = "com.alibaba.nacos.consistency.entity";
+
+// 可以看到，消息类型是可以定义多个的
+
+// 定义一个 Log 消息；内部字段类型、值、唯一编号定义 name value = index;
+message Log {
+  string group = 1;
+  string key = 2;
+  bytes data = 3;
+  string type = 4;
+  string operation = 5;
+  map<string, string> extendInfo = 6;
+}
+
+// 定义一个 GetRequest 消息
+message GetRequest {
+  string group = 1;
+  bytes data = 2;
+  map<string, string> extendInfo = 3;
+}
+
+// 定义一个 Response 消息
+message Response {
+  bytes data = 1;
+  string errMsg = 2;
+  bool success = 3;
+}
+```
 {% endtab %}
 
 {% tab title="Second Tab" %}
+```text
+syntax = "proto3";
 
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 result_per_page = 3;
+}
+```
 {% endtab %}
 {% endtabs %}
 
+{% hint style="success" %}
+Protobuf 中指定的类型与对应语言生成的数据类型参照表
+{% endhint %}
 
+| .proto Type | Notes | Java Type | Python Type\[2\] | Go Type |
+| :--- | :--- | :--- | :--- | :--- |
+| double |  | double | float | float64 |
+| float |  | float | float | float32 |
+| int32 | 使用可变长度编码。负数编码效率低下–如果您的字段可能具有负值，请改用sint32 | int | int | int32 |
+| int64 | 使用可变长度编码。负数编码效率低下–如果您的字段可能具有负值，请改用sint64 | long | int/long\[3\] | int64 |
+| uint32 | 使用可变长度编码 | int\[1\] | int/long\[3\] | uint32 |
+| uint64 | 使用可变长度编码 | long\[1\] | int/long\[3\] | uint64 |
+| sint32 | 使用可变长度编码。有符号的int值。与常规int32相比，它们更有效地编码负数 | int | int | int32 |
+| sint64 | 使用可变长度编码。有符号的int值。与常规int64相比，它们更有效地编码负数 | long | int/long\[3\] | int64 |
+| fixed32 | 始终为四个字节。如果值通常大于228，则比uint32更有效 | int\[1\] | int/long\[3\] | uint32 |
+| fixed64 | 始终为八个字节。如果值通常大于256，则比uint64更有效 | long\[1\] | int/long\[3\] | uint64 |
+| sfixed32 | 始终为四个字节 | int | int | int32 |
+| sfixed64 | 始终为八个字节 | long | int/long\[3\] | int64 |
+| bool |  | boolean | bool | bool |
+| string | 字符串必须始终包含UTF-8编码或7位ASCII文本，并且不能超过232 | String | str/unicode\[4\] | string |
+| bytes | 可以包含不超过232个任意字节序列 | ByteString | str | \[\]byte |
 
 ### Protobuf 之 Java Tutorial
 
@@ -65,8 +129,8 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 
 ### Reference
 
-* [protocol-buffers guide](https://developers.google.com/protocol-buffers/docs/overview)
 * [protobuf 3.8.0 Download](https://github.com/protocolbuffers/protobuf/releases/tag/v3.8.0)
+* [protocol-buffers guide](https://developers.google.com/protocol-buffers/docs/overview)
 
 
 
