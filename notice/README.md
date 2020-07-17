@@ -1,6 +1,6 @@
-# **说明**
+# 准备与须知
 
-在阅读源码之前建议 `fork` `Nacos` 项目并选择好你要阅读的 `Nacos `版本，然后重新拉取分支。
+在阅读源码之前建议 `fork` `Nacos` 项目并选择好你要阅读的 `Nacos`版本，然后重新拉取分支。
 
 笔者的源码阅读仓库在：[https://github.com/rexlin600/nacos](https://github.com/rexlin600/nacos)
 
@@ -21,7 +21,7 @@
 
 > 操作步骤
 
-```
+```text
 # clone 源码到本地并进入 nacos 源码目录（略）
 
 # checkout 指定 tag

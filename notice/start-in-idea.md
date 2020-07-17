@@ -6,7 +6,11 @@
 
 ![](../.gitbook/assets/screenshot_1594532157635.png)
 
-可以看到除了 `PasswordEncoderUtil` 是一个测试类之外，启动类有 6 个，但是我们应该如何去正常启动 Nacos 服务呢？**IDEA 中启动 Nacos**
+可以看到除了 `PasswordEncoderUtil` 是一个测试类之外，启动类有 6 个，但是我们应该如何去正常启动 Nacos 服务呢？
+
+\*\*\*\*
+
+**IDEA 中启动 Nacos**
 
 这里直接给结论吧，只需要启动 `Nacos` 这一个应用程序即可（注意需要添加 VM options 以单机模式启动 `-Dnacos.standalone=true` ），如下：
 

@@ -1,8 +1,8 @@
-# **概念**
+# 核心概念
 
-> 本文摘自 Nacos 官网：[Nacos 概念]([https://nacos.io/en-us/docs/concepts.html](https://nacos.io/en-us/docs/concepts.html))
+> 本文摘自 Nacos 官网：\[Nacos 概念\]\([https://nacos.io/en-us/docs/concepts.html](https://nacos.io/en-us/docs/concepts.html)\)
 
-`Nacos` 引入了一些基本的概念，系统性的了解一下这些概念可以帮助您更好的理解和正确的使用 `Nacos` 产品## **地域 Region**
+`Nacos` 引入了一些基本的概念，系统性的了解一下这些概念可以帮助您更好的理解和正确的使用 `Nacos` 产品\#\# **地域 Region**
 
 物理的数据中心，资源创建成功后不能更换。
 
@@ -28,7 +28,7 @@
 
 ## **配置项 Configuration Item**
 
-一个具体的可配置的参数与其值域，通常以 param-key=param-value 的形式存在。例如我们常配置系统的日志输出级别（logLevel=INFO|WARN|ERROR） 就是一个配置项。
+一个具体的可配置的参数与其值域，通常以 param-key=param-value 的形式存在。例如我们常配置系统的日志输出级别（logLevel=INFO\|WARN\|ERROR） 就是一个配置项。
 
 ## **配置集 Configuration Set**
 
@@ -64,7 +64,7 @@ Nacos 的客户端 SDK 会在本地生成配置的快照。当客户端无法连
 
 ## **元信息 MetaData**
 
-Nacos数据（如配置和服务）描述信息，如服务版本、权重、容灾策略、负载均衡策略、鉴权配置、各种自定义标签 (label)，从作用范围来看，分为服务级别的元信息、集群的元信息及实例的元信息。
+Nacos数据（如配置和服务）描述信息，如服务版本、权重、容灾策略、负载均衡策略、鉴权配置、各种自定义标签 \(label\)，从作用范围来看，分为服务级别的元信息、集群的元信息及实例的元信息。
 
 ## **应用 Application**
 
@@ -88,9 +88,9 @@ Nacos数据（如配置和服务）描述信息，如服务版本、权重、容
 
 ## **健康检查 Health Check**
 
-以指定方式检查服务下挂载的实例 (Instance) 的健康度，从而确认该实例 (Instance) 是否能提供服务。根据检查结果，实例 (Instance) 会被判断为健康或不健康。对服务发起解析请求时，不健康的实例 (Instance) 不会返回给客户端。
+以指定方式检查服务下挂载的实例 \(Instance\) 的健康度，从而确认该实例 \(Instance\) 是否能提供服务。根据检查结果，实例 \(Instance\) 会被判断为健康或不健康。对服务发起解析请求时，不健康的实例 \(Instance\) 不会返回给客户端。
 
 ## **健康保护阈值 Protect Threshold**
 
-为了防止因过多实例 (Instance) 不健康导致流量全部流向健康实例 (Instance) ，继而造成流量压力把健康 健康实例 (Instance) 压垮并形成雪崩效应，应将健康保护阈值定义为一个 0 到 1 之间的浮点数。当域名健康实例 (Instance) 占总服务实例 (Instance) 的比例小于该值时，无论实例 (Instance) 是否健康，都会将这个实例 (Instance) 返回给客户端。这样做虽然损失了一部分流量，但是保证了集群的剩余健康实例 (Instance) 能正常工作。
+为了防止因过多实例 \(Instance\) 不健康导致流量全部流向健康实例 \(Instance\) ，继而造成流量压力把健康 健康实例 \(Instance\) 压垮并形成雪崩效应，应将健康保护阈值定义为一个 0 到 1 之间的浮点数。当域名健康实例 \(Instance\) 占总服务实例 \(Instance\) 的比例小于该值时，无论实例 \(Instance\) 是否健康，都会将这个实例 \(Instance\) 返回给客户端。这样做虽然损失了一部分流量，但是保证了集群的剩余健康实例 \(Instance\) 能正常工作。
 
