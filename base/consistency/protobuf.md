@@ -36,44 +36,6 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 > 😎 详细语法格式请参考文末提供的官方指南，这里仅以 Nacos 中的 Data.proto 为例，大家能理解这个文件的内容即可
 
 {% tabs %}
-{% tab title="消息" %}
-```text
-// 使用 proto3 版本，默认是使用 proto2 版本协议
-syntax = "proto3";
-
-// 生成多个 Java 文件，如果生成单个文件更加的难以阅读
-option java_multiple_files = true;
-// 生成的文件保存的路径
-option java_package = "com.alibaba.nacos.consistency.entity";
-
-// 可以看到，消息类型是可以定义多个的
-
-// 定义一个 Log 消息；内部字段类型、值、唯一编号定义 name value = index;
-message Log {
-  string group = 1;
-  string key = 2;
-  bytes data = 3;
-  string type = 4;
-  string operation = 5;
-  map<string, string> extendInfo = 6;
-}
-
-// 定义一个 GetRequest 消息
-message GetRequest {
-  string group = 1;
-  bytes data = 2;
-  map<string, string> extendInfo = 3;
-}
-
-// 定义一个 Response 消息
-message Response {
-  bytes data = 1;
-  string errMsg = 2;
-  bool success = 3;
-}
-```
-{% endtab %}
-
 {% tab title="定义消息类型" %}
 ```
 
@@ -169,6 +131,44 @@ protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
 
 // 示例
 protoc --proto_path=./ --java_out=./ ./Data.proto
+```
+{% endtab %}
+
+{% tab title="示例" %}
+```
+// 使用 proto3 版本，默认是使用 proto2 版本协议
+syntax = "proto3";
+
+// 生成多个 Java 文件，如果生成单个文件更加的难以阅读
+option java_multiple_files = true;
+// 生成的文件保存的路径
+option java_package = "com.alibaba.nacos.consistency.entity";
+
+// 可以看到，消息类型是可以定义多个的
+
+// 定义一个 Log 消息；内部字段类型、值、唯一编号定义 name value = index;
+message Log {
+  string group = 1;
+  string key = 2;
+  bytes data = 3;
+  string type = 4;
+  string operation = 5;
+  map<string, string> extendInfo = 6;
+}
+
+// 定义一个 GetRequest 消息
+message GetRequest {
+  string group = 1;
+  bytes data = 2;
+  map<string, string> extendInfo = 3;
+}
+
+// 定义一个 Response 消息
+message Response {
+  bytes data = 1;
+  string errMsg = 2;
+  bool success = 3;
+}
 ```
 {% endtab %}
 {% endtabs %}
