@@ -29,7 +29,7 @@ description: Between two stools one falls to the ground.
 ```bash
 .
 ├── 模块名
-│   ├── 问题列表
+│   ├── 问题列表（后续会删除或迁移至其他目录）
 │   ├── 问题一
 │   ├── 问题二
 │   ├── 问题三
