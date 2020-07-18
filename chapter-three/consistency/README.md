@@ -2,7 +2,7 @@
 description: Big mouthfuls ofter choke.
 ---
 
-# 模块 consistency
+# Consistency 模块
 
 > consistency 模块代码层次结构
 
