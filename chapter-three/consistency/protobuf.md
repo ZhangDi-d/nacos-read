@@ -33,19 +33,27 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 
 ### Protobuf 语法
 
-> 😎 详细语法格式请参考文末提供的官方指南，这里仅以 Nacos 中的 Data.proto 为例，大家能理解这个文件的内容即可
+> 😎 详细语法格式请参考文末提供的官方指南，这里仅以 Nacos 中的 Data.proto 为例，大家能理解这个文件的内容即可，详细请参考 [官方指南](https://developers.google.cn/protocol-buffers/docs/proto3#simple)
 
 {% tabs %}
 {% tab title="定义消息类型" %}
-```
+> Defining A Message Type，可参考 [官方指南](https://developers.google.cn/protocol-buffers/docs/proto3#simple)
 
+```bash
+syntax = "proto3";
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 result_per_page = 3;
+}
 ```
 {% endtab %}
 
-{% tab title="类型参照表" %}
-```
-见下图
-```
+{% tab title="数据类型" %}
+> Protobuf 中指定的类型与对应语言生成的**数据类型参照表**（简版）
+
+![](../../.gitbook/assets/protobuff-type.png)
 {% endtab %}
 
 {% tab title="默认值" %}
@@ -60,7 +68,7 @@ message fileds：取决于不同的语言，详情见官方文档
 {% endtab %}
 
 {% tab title="枚举值" %}
-```
+```bash
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
@@ -91,8 +99,8 @@ enum Foo {
 ```
 {% endtab %}
 
-{% tab title="可选条件" %}
-```
+{% tab title="条件" %}
+```bash
 // 定义生成 Java 文件的路径
 option java_package = "com.example.foo";
 
@@ -113,29 +121,8 @@ int32 old_field = 6 [deprecated = true];
 ```
 {% endtab %}
 
-{% tab title="生成代码" %}
-```
-// The Protocol Compiler is invoked as follows:
-protoc --proto_path=_IMPORT_PATH_ \
-    --cpp_out=_DST_DIR_ \
-    --java_out=_DST_DIR_ \
-    --python_out=_DST_DIR_ \
-    --go_out=_DST_DIR_ \
-    --ruby_out=_DST_DIR_ \
-    --objc_out=_DST_DIR_ \
-    --csharp_out=_DST_DIR_ \
-    _path/to/file_.proto
-    
-// Java 生成代码
-protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
-
-// 示例
-protoc --proto_path=./ --java_out=./ ./Data.proto
-```
-{% endtab %}
-
-{% tab title="示例" %}
-```
+{% tab title="Nacos实例" %}
+```bash
 // 使用 proto3 版本，默认是使用 proto2 版本协议
 syntax = "proto3";
 
@@ -173,11 +160,28 @@ message Response {
 {% endtab %}
 {% endtabs %}
 
-> Protobuf 中指定的类型与对应语言生成的**数据类型参照表**（简版）
+### Protobuf 生成代码
 
-![protobuff-type](../../.gitbook/assets/protobuff-type.png)
+可以使用 Protobuf 提供的工具生成代码，如下：
 
+```bash
+// The Protocol Compiler is invoked as follows:
+protoc --proto_path=_IMPORT_PATH_ \
+    --cpp_out=_DST_DIR_ \
+    --java_out=_DST_DIR_ \
+    --python_out=_DST_DIR_ \
+    --go_out=_DST_DIR_ \
+    --ruby_out=_DST_DIR_ \
+    --objc_out=_DST_DIR_ \
+    --csharp_out=_DST_DIR_ \
+    _path/to/file_.proto
+    
+// Java 生成代码
+protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
 
+// 示例
+protoc --proto_path=./ --java_out=./ ./Data.proto
+```
 
 ### Protobuf 之 Java Tutorial
 
@@ -188,14 +192,6 @@ message Response {
 * Use the Java protocol buffer API to write and read messages.（使用 Java Protobuf API 轻松的实现结构化消息的读取、写入）
 
 当然这不是在 Java 中使用 Protobuf 的全面指南。有关更多详细的参考信息，请参考 [Protocol Buffer Language Guide](https://developers.google.com/protocol-buffers/docs/proto), [Java API Reference](https://developers.google.com/protocol-buffers/docs/reference/java), [Java Generated Code Guide](https://developers.google.com/protocol-buffers/docs/reference/java-generated), 以及 [Encoding Reference](https://developers.google.com/protocol-buffers/docs/encoding)
-
-
-
-
-
-
-
-
 
 ### Reference
 
