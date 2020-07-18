@@ -14,7 +14,7 @@ Protocol buffers are a language-neutral, platform-neutral extensible mechanism f
 
 Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序列化框架，常用于通信协议、数据存储等领域。
 
-另外 Protobuf 最重要的就是利用定义的 **.proto** 文件生成**特殊的源代码（意思是说源代码不易读懂，Google 还是很讲究的）**，利用这个源代码我们可以非常轻松的在各种数据流中写入和读取结构化的数据。
+另外 Protobuf 最重要的就是利用定义的 **.proto** 文件生成**特殊的源代码（特殊的源代码意思是说源代码不易读懂，Google 还是很讲究的）**，利用这个源代码我们可以非常轻松的在各种数据流中写入和读取结构化的数据。
 
 \*\*\*\*❤ **Protobuf 优点：**
 
@@ -24,8 +24,8 @@ Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序�
 
 💔 **Protobuf 缺点：**
 
-* 需要定义 **.proto** 文件，根据定义的 **.proto** 文件生成相应语言的代码，另一方面还需要对生成的代码（如 Java 类）进行序列化和反序列化
-* **.proto** 文件和生成的代码类相对而言难以读懂
+* 需要定义 **.proto** 文件，根据定义的 **.proto** 文件生成相应语言的代码；只涉及序列化和反序列化技术，不涉及RPC功能（类似XML或者JSON的解析器）
+* **.proto** 文件和生成的代码类相对而言难以读懂，缺乏自描述
 
 \*\*\*\*🌠 **Protobuf 支持的语言**
 
