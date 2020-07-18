@@ -1,4 +1,4 @@
-# Nacos 架构
+# 逻辑架构
 
 > 阿里 Nacos 基本架构示意图（原文地址：[Nacos架构](https://nacos.io/zh-cn/docs/architecture.html)），关于基本概念这里就不再阐述了，具体请参考上一节
 

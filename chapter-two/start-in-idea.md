@@ -24,6 +24,7 @@ description: Better good neighbours near than relations far away.
 
 ```text
 ...
+// 注意，此时是使用 DB 存储
 Nacos started successfully in stand alone mode. use external storage
 ...
 ```
