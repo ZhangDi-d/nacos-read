@@ -16,7 +16,6 @@
   * [Consistency 模块](chapter-three/consistency/README.md)
     * [问题列表](chapter-three/consistency/issue-list.md)
     * [详解Nacos中的IdGenerator](chapter-three/consistency/idgenerator-in-nacos.md)
-    * [深入理解 Protobuf](chapter-three/consistency/protobuf.md)
   * [API 模块](chapter-three/api/README.md)
     * [问题列表](chapter-three/api/issue-list.md)
   * [Common 模块](chapter-three/common/README.md)
@@ -44,4 +43,5 @@
   * [元组Tuple](chapter-six/tuple.md)
   * [极简UML](chapter-six/easy-uml.md)
   * [SPI与JDBC驱动加载原理](chapter-six/spi-and-jdbc-auto-loading.md)
+  * [理解 Protobuf](chapter-six/protobuf.md)
 
