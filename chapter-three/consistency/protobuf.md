@@ -6,8 +6,6 @@ description: For man is man and master of his fate.
 
 ## 概念
 
-![](../../.gitbook/assets/image%20%282%29.png)
-
 {% hint style="success" %}
 Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
