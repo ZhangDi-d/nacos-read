@@ -9,10 +9,10 @@ description: For man is man and master of his fate.
 {% hint style="success" %}
 Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
-翻译：Protocol buffers 是一种语言无关、平台无关的用于序列化数据的可扩展机制际上
+翻译：Protocol buffers 是一种语言无关、平台无关的用于序列化数据的可扩展机制际
 {% endhint %}
 
-Protocol buffers，简称 Protobuf。它是一种语言、平台无关性的序列化框架，常用于通信协议、数据存储等领域。
+Protocol buffers，简称 Protobuf。**它是一种语言、平台无关性的序列化框架**，常用于通信协议、数据存储等领域。
 
 另外 Protobuf 最重要的就是利用定义的 **.proto** 文件生成**特殊的源代码（特殊的源代码意思是说源代码不易读懂，Google 还是很讲究的）**，利用这个源代码我们可以非常轻松的在各种数据流中写入和读取结构化的数据。
 
@@ -120,6 +120,14 @@ option optimize_for = CODE_SIZE;
 int32 old_field = 6 [deprecated = true];
 ```
 {% endtab %}
+
+{% tab title="字段修饰" %}
+```
+requir​ed：必须提供该字段的值，否者消息被视为“未初始化”，将引发 IOException
+optional：可选的字段
+repeated：该字段可以重复任意次（包括零次），重复的字段视为动态大小的数组
+```
+{% endtab %}
 {% endtabs %}
 
 ### Nacos 实例
@@ -178,7 +186,10 @@ protoc --proto_path=_IMPORT_PATH_ \
     --csharp_out=_DST_DIR_ \
     _path/to/file_.proto
     
-// Java 生成代码语法
+// Java 生成代码语法一
+protoc -I=$SRC_DIR --java_out=$DST_DIR $SRC_DIR/addressbook.proto
+
+// Java 生成代码语法二
 protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
 
 // 生成代码示例
@@ -189,11 +200,150 @@ protoc --proto_path=./ --java_out=./ ./Data.proto
 
 > Java 使用 protobuf 实际上也很容易，通过下面三个步骤即可
 
-* Define message formats in a `.proto` file.（定义一个 .proto 消息格式化文件）
-* Use the protocol buffer compiler. （使用 protobuf 编译器编译这个文件）
+* Define message formats in a `.proto` file.（定义一个 .proto 消息格式化文件，_Nacos 实例_）
+* Use the protocol buffer compiler. （使用 protobuf 编译器编译这个文件，见上一节  _Protobuf 生成代码_）
 * Use the Java protocol buffer API to write and read messages.（使用 Java Protobuf API 轻松的实现结构化消息的读取、写入）
 
-当然这不是在 Java 中使用 Protobuf 的全面指南。有关更多详细的参考信息，请参考 [Protocol Buffer Language Guide](https://developers.google.com/protocol-buffers/docs/proto), [Java API Reference](https://developers.google.com/protocol-buffers/docs/reference/java), [Java Generated Code Guide](https://developers.google.com/protocol-buffers/docs/reference/java-generated), 以及 [Encoding Reference](https://developers.google.com/protocol-buffers/docs/encoding)
+{% hint style="success" %}
+以 Nacos 为例，我们剖析一下上面那个 .proto 文件生成的代码，其中 Log 是如何使用的
+{% endhint %}
+
+我们可以在 _consistency_ 这个模块的 _com.alibaba.nacos.consistency.entity_ 目录下可以看到 _Data.proto_ 最终生成的类：
+
+```bash
+➜  entity git:(feature-1.3.1) tree 
+.
+├── Data.java
+├── GetRequest.java
+├── GetRequestOrBuilder.java
+├── Log.java
+├── LogOrBuilder.java
+├── Response.java
+├── ResponseOrBuilder.java
+
+0 directories, 7 files
+```
+
+我们可以通过代码清晰的看到：
+
+* _Data.java_ 是自动生成的和 .proto 文件名一致的类，内部维护了很多 _com.google.protobuf_ 包的很多内容
+* GetRequest 实现了 GetRequestBuilder（实际上面 Data.proto 文件中定义的三个 Message Type 分别都有一个 XXXBuilder 和 XXX 实现类）
+
+> 使用 Protobuf API 进行数据的读取与写入
+
+```java
+// DistributedDatabaseOperateImpl 类通过 Protobuf API 构建一个 Log 对象
+
+Log log = Log.newBuilder()
+    // set group
+    .setGroup(group())
+    // set key，format：{timestamp}-{group}-{ip:port}-{signature}
+    .setKey(key)
+    .setData(
+        // 使用 Protobuf 进行序列化数据
+        ByteString.copyFrom(serializer.serialize(sqlContext))
+    )
+    // 存储额外数据
+    .putAllExtendInfo(EmbeddedStorageContextUtils.getCurrentExtendInfo())
+    // 设置 Type
+    .setType(sqlContext.getClass().getCanonicalName())
+    .build();
+```
+
+还我们文章最开始说的 Protobuf **它是一种语言、平台无关性的序列化框架 吗？可以从上面的构建 Log 对象的过程中可以看出来实际上我们就是通过 ByteString** 将数据进行了序列化！
+
+后续就是通过阿里巴巴封装的 JRaft 包调用请求，如下：
+
+```java
+    // 1. 通过 raftServer 调用 commit    
+    @Override
+    public CompletableFuture<Response> submitAsync(Log data) {
+        return raftServer.commit(data.getGroup(), data, new CompletableFuture<>());
+    }
+    
+    
+    // 2. 具体调用如下
+    public CompletableFuture<Response> commit(final String group, final Message data,
+                                          final CompletableFuture<Response> future) {
+        LoggerUtils.printIfDebugEnabled(Loggers.RAFT, "data requested this time : {}", data);
+        final RaftGroupTuple tuple = findTupleByGroup(group);
+        if (tuple == null) {
+            future.completeExceptionally(new IllegalArgumentException("No corresponding Raft Group found : " + group));
+            return future;
+        }
+    
+        FailoverClosureImpl closure = new FailoverClosureImpl(future);
+    
+        final Node node = tuple.node;
+        if (node.isLeader()) {
+            // 领导节点直接应用此请求
+            // The leader node directly applies this request
+            applyOperation(node, data, closure);
+        } else {
+            // 转发给领导进行请求处理
+            // Forward to Leader for request processing
+            invokeToLeader(group, data, rpcRequestTimeoutMs, closure);
+        }
+        return future;
+    }
+    
+    // 3-1. 领导节点直接应用此请求
+    public void applyOperation(Node node, Message data, FailoverClosure closure) {
+    // JRaft 基础消息结构
+    final Task task = new Task();
+
+    // 注入闭包结构数据
+    task.setDone(new NacosClosure(data, status -> {
+        NacosClosure.NacosStatus nacosStatus = (NacosClosure.NacosStatus) status;
+        closure.setThrowable(nacosStatus.getThrowable());
+        closure.setResponse(nacosStatus.getResponse());
+        closure.run(nacosStatus);
+    }));
+    // 注入 protocol buffers 数据
+    task.setData(ByteBuffer.wrap(data.toByteArray()));
+
+    // 调用node处理请求
+    node.apply(task);
+    }
+    
+    // 3-2. 转发给领导进行请求处理
+    private void invokeToLeader(final String group, final Message request, final int timeoutMillis,
+                            FailoverClosure closure) {
+    try {
+        // 获取 leader Endpoint
+        final Endpoint leaderIp = Optional.ofNullable(getLeader(group))
+            .orElseThrow(() -> new NoLeaderException(group)).getEndpoint();
+
+        // rpc 客户端异步调用
+        cliClientService.getRpcClient().invokeAsync(leaderIp, request, new InvokeCallback() {
+            @Override
+            public void complete(Object o, Throwable ex) {
+                if (Objects.nonNull(ex)) {
+                    closure.setThrowable(ex);
+                    closure.run(new Status(RaftError.UNKNOWN, ex.getMessage()));
+                    return;
+                }
+                closure.setResponse((Response) o);
+                closure.run(Status.OK());
+            }
+    
+                @Override
+                public Executor executor() {
+                    return RaftExecutor.getRaftCliServiceExecutor();
+                }
+            }, timeoutMillis);
+        } catch (Exception e) {
+            closure.setThrowable(e);
+            closure.run(new Status(RaftError.UNKNOWN, e.toString()));
+        }
+    }
+```
+
+{% hint style="danger" %}
+更加详细、高端的玩法还是需要自己去实际工作中使用、体验
+{% endhint %}
+
+当然这不是在 Java 中使用 Protobuf 的全面指南。有关更多详细的参考信息，请参考 [Protocol Buffer Language Guide](https://developers.google.com/protocol-buffers/docs/proto), [Java API Reference](https://developers.google.com/protocol-buffers/docs/reference/java), [Java Generated Code Guide](https://developers.google.com/protocol-buffers/docs/reference/java-generated), 以及 [Encoding Referenc](https://developers.google.com/protocol-buffers/docs/encoding)
 
 ### Reference
 
