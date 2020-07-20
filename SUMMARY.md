@@ -10,9 +10,7 @@
   * [下载项目](get-start/preparation.md)
   * [IDE 调试](get-start/start-in-idea.md)
   * [模块剖析](get-start/code-and-module-structure.md)
-  * [阅读须知](get-start/reading-instructions.md)
-
-## 概念及入门 <a id="first-part"></a>
+* [阅读须知](reading-instructions.md)
 
 ## 基础模块 <a id="base-module"></a>
 
