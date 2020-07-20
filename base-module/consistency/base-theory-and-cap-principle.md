@@ -6,7 +6,7 @@ description: CAP：Consistency、Availability、Partition Tolerance
 
 ## CAP 概念
 
-{% hint style="info" %}
+{% hint style="success" %}
 **CAP定理：在一个分布式系统中，CAP 原则这三个要素最多只能满足其中两个要素，无法三者均满足！**
 {% endhint %}
 
