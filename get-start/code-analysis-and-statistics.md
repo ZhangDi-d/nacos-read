@@ -10,7 +10,7 @@ description: Better an empty purse than an empty head.
 
 因为我们一般只关注与 Java 代码，因此我这里分析时屏蔽了 HTML、CSS、JS 等代码**总体统计：**
 
-![](.gitbook/assets/screenshot_1594536336632.png)
+![](../.gitbook/assets/screenshot_1594536336632.png)
 
 在阅读之前建议先分析一下代码量、占比等（可以在 IDEA 下载 statistics 插件），如下：
 
@@ -18,11 +18,11 @@ description: Better an empty purse than an empty head.
 
 > 可以看出共计有 `14W` 行代码，有效代码占 `8W+`，占比 `58%`，代码量还是不晓得，所以不建议通篇阅读
 
-![](.gitbook/assets/screenshot_1594535990905.png)
+![](../.gitbook/assets/screenshot_1594535990905.png)
 
 **properties文件统计：**
 
 > 配置相对 `Java` 源代码相对而言就少很多了
 
-![](.gitbook/assets/screenshot_1594536115608.png)
+![](../.gitbook/assets/screenshot_1594536115608.png)
 

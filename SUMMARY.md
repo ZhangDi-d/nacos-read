@@ -3,18 +3,16 @@
 * [Introduction](README.md)
 * [概念及名词解释](core-concepts.md)
 * [逻辑架构](nacos-arch.md)
+* [入门](get-start/README.md)
+  * [环境与版本](get-start/warning-env-and-version.md)
+  * [快速开始](get-start/quick-start.md)
+  * [分析与统计](get-start/code-analysis-and-statistics.md)
+  * [下载项目](get-start/preparation.md)
+  * [IDE 调试](get-start/start-in-idea.md)
+  * [模块剖析](get-start/code-and-module-structure.md)
+  * [阅读须知](get-start/reading-instructions.md)
 
 ## 概念及入门 <a id="first-part"></a>
-
----
-
-* [环境与版本](warning-env-and-version.md)
-* [快速开始](quick-start.md)
-* [分析与统计](code-analysis-and-statistics.md)
-* [下载项目](preparation.md)
-* [IDE 调试](start-in-idea.md)
-* [模块剖析](code-and-module-structure.md)
-* [阅读须知](reading-instructions.md)
 
 ## 基础模块 <a id="base-module"></a>
 
