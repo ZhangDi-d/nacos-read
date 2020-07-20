@@ -36,7 +36,7 @@ Protocol buffers，简称 Protobuf。**它是一种语言、平台无关性的�
 > 简单介绍下 Protobuf 常用、最简单的语法情形，能够看懂 Nacos 的实例就行
 
 {% tabs %}
-{% tab title="定义消息类型" %}
+{% tab title="如何定义消息类型" %}
 > Defining A Message Type，可参考 [官方指南](https://developers.google.cn/protocol-buffers/docs/proto3#simple)
 
 ```bash
@@ -123,6 +123,8 @@ int32 old_field = 6 [deprecated = true];
 
 {% tab title="字段修饰" %}
 ```
+// 注意 protocol v2、v3 版本部分修饰已去掉，详情参考官方指南
+
 requir​ed：必须提供该字段的值，否者消息被视为“未初始化”，将引发 IOException
 optional：可选的字段
 repeated：该字段可以重复任意次（包括零次），重复的字段视为动态大小的数组
@@ -132,7 +134,7 @@ repeated：该字段可以重复任意次（包括零次），重复的字段视
 
 ### Nacos 实例
 
-> 详细语法格式请参考文末提供的官方指南，这里仅以 Nacos 中的 Data.proto 为例，大家能理解这个文件的内容即可，详细请参考 [官方指南](https://developers.google.cn/protocol-buffers/docs/proto3#simple)
+> 这里以 Nacos 中的 Data.proto 为例，大家能理解这个文件的写的内容即可，详细请参考 [官方指南](https://developers.google.cn/protocol-buffers/docs/proto3#simple)
 
 ```bash
 // 使用 proto3 版本，默认是使用 proto2 版本协议
@@ -170,9 +172,30 @@ message Response {
 }
 ```
 
-### Protobuf 生成代码
+### Protobuf 之 Java Tutorial
 
-可以使用 Protobuf 提供的工具生成代码，如下：
+> Java 使用 protobuf 实际上也很容易，通过下面四个步骤即可
+
+* 项目引入 protobuf 依赖
+* 定义一个 .proto 消息格式化文件，_Nacos 实例_
+* 使用 protobuf 编译器编译这个文件，见上一节  _Protobuf 生成代码_
+* 使用 Java Protobuf API 轻松的实现结构化消息的读取、写入
+
+{% hint style="success" %}
+以 Nacos 为例，我们剖析一下上面那个 .proto 文件生成的代码，其中 Log 是如何使用的
+{% endhint %}
+
+**第一步：**首选在 Java 项目中引入依赖
+
+```markup
+    <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>3.8.0</version>
+    </dependency>
+```
+
+**第二步：**定义一个 .proto 文件
 
 ```bash
 // Protocol 编译器的语法格式如下：
@@ -196,17 +219,7 @@ protoc --proto_path=_IMPORT_PATH_ --java_out=_DST_DIR_ _path/to/file_.proto
 protoc --proto_path=./ --java_out=./ ./Data.proto
 ```
 
-### Protobuf 之 Java Tutorial
-
-> Java 使用 protobuf 实际上也很容易，通过下面三个步骤即可
-
-* Define message formats in a `.proto` file.（定义一个 .proto 消息格式化文件，_Nacos 实例_）
-* Use the protocol buffer compiler. （使用 protobuf 编译器编译这个文件，见上一节  _Protobuf 生成代码_）
-* Use the Java protocol buffer API to write and read messages.（使用 Java Protobuf API 轻松的实现结构化消息的读取、写入）
-
-{% hint style="success" %}
-以 Nacos 为例，我们剖析一下上面那个 .proto 文件生成的代码，其中 Log 是如何使用的
-{% endhint %}
+**第三步：**利用 Protoco 工具生成代码
 
 我们可以在 _consistency_ 这个模块的 _com.alibaba.nacos.consistency.entity_ 目录下可以看到 _Data.proto_ 最终生成的类：
 
@@ -229,7 +242,7 @@ protoc --proto_path=./ --java_out=./ ./Data.proto
 * _Data.java_ 是自动生成的和 .proto 文件名一致的类，内部维护了很多 _com.google.protobuf_ 包的很多内容
 * GetRequest 实现了 GetRequestBuilder（实际上面 Data.proto 文件中定义的三个 Message Type 分别都有一个 XXXBuilder 和 XXX 实现类）
 
-> 使用 Protobuf API 进行数据的读取与写入
+**第四步：**使用 Protobuf API 进行数据的读取与写入
 
 ```java
 // DistributedDatabaseOperateImpl 类通过 Protobuf API 构建一个 Log 对象
