@@ -1,8 +1,10 @@
 ---
-description: Between two stools one falls to the ground.
+description: go go go
 ---
 
-# 阅读须知
+# 基本概念与架构
+
+## 写在前面
 
 前面我说过阅读源码一般是 `非线性阅读`，但是这依然是有章可循的，就如上面列出的项目模块依赖一样，我建议按照模块间依赖，遵循如下原则去阅读（本系列也是这样展开的）：
 
