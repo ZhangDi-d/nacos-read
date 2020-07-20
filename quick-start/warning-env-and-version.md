@@ -24,11 +24,7 @@ description: 'Be just to all, but trust not all.'
 **额外说明**：关于 `Spring Cloud Alibaba` 仓库迁移
 {% endhint %}
 
-因为 `Spring Cloud` 官方修改了各个第三方项目的发布策略，因此才有了：[通知: Spring Cloud Alibaba 仓库迁移](https://blog.csdn.net/xxscj/article/details/96310527)，这也是为什么我们去搜索 Nacos 的仓库时会看到两个版本：
-
-![](https://github.com/rexlin600/nacos-read/tree/18c5a5d64f2b54fd456cb7ccfcd66fd5eb30aae7/summary/images/screenshot_1594484383951.png)
-
-也正是基于需要前面参考链接中所描述的原因，后续我们使用 `Nacos` 请使用 `Alibaba` 提供的依赖即可&gt; Nacos 与 SpringBoot 版本如何选择？
+因为 `Spring Cloud` 官方修改了各个第三方项目的发布策略，因此才有了：[通知: Spring Cloud Alibaba 仓库迁移](https://blog.csdn.net/xxscj/article/details/96310527)，这也是为什么我们去搜索 Nacos 的仓库时会看到两个版本；也正是基于需要前面参考链接中所描述的原因，后续我们使用 `Nacos` 请使用 `Alibaba` 提供的依赖即可&gt; Nacos 与 SpringBoot 版本如何选择？
 
 在你使用 `SpringBoot` 集成 `Nacos` 时可能会引入如下 `starter`，如下：
 
