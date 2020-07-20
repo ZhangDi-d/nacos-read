@@ -49,4 +49,5 @@
   * [极简UML](welfare-module/external-docs/easy-uml.md)
   * [SPI与JDBC驱动加载原理](welfare-module/external-docs/spi-and-jdbc-auto-loading.md)
   * [理解 Protobuf](welfare-module/external-docs/protobuf.md)
+  * [理解 Hessian](welfare-module/external-docs/hessian.md)
 
