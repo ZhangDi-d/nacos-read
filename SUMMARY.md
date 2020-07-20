@@ -5,9 +5,9 @@
 * [逻辑架构](nacos-arch.md)
 * [Quick Start](quick-start/README.md)
   * [环境与版本](quick-start/warning-env-and-version.md)
-  * [快速开始](quick-start/quick-start.md)
-  * [分析与统计](quick-start/code-analysis-and-statistics.md)
-  * [下载项目](quick-start/preparation.md)
+  * [构建及部署](quick-start/build-and-deploy.md)
+  * [代码分析与统计](quick-start/code-analysis-and-statistics.md)
+  * [下载1.3.1分支](quick-start/preparation.md)
   * [IDE 调试](quick-start/start-in-idea.md)
   * [模块剖析](quick-start/code-and-module-structure.md)
 * [阅读须知](reading-instructions.md)
@@ -37,13 +37,10 @@
   * [问题列表](core-module/config/issue-list.md)
 * [Console 模块](core-module/console/README.md)
   * [问题列表](core-module/console/issue-list.md)
-
-## 高级模块 <a id="senior-module"></a>
-
-* [Address 模块](senior-module/address/README.md)
-  * [问题列表](senior-module/address/issue-list.md)
-* [Istio 模块](senior-module/istio/README.md)
-  * [问题列表](senior-module/istio/issue-list.md)
+* [Address 模块](core-module/address/README.md)
+  * [问题列表](core-module/address/issue-list.md)
+* [Istio 模块](core-module/istio/README.md)
+  * [问题列表](core-module/istio/issue-list.md)
 
 ## 福利章
 

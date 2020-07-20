@@ -2,7 +2,7 @@
 description: Better an empty purse than an empty head.
 ---
 
-# 分析与统计
+# 代码分析与统计
 
 阅读源码需要讲策略，不能一股脑儿的就开始去通篇阅读，这样最后可能收效甚微。同样地，阅读源码不可能将所有实现细节都复制粘贴出来讲解
 
