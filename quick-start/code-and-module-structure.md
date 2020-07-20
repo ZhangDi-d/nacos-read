@@ -4,6 +4,8 @@ description: Between the cup and the lip a morsel may slip.
 
 # 模块剖析
 
+## 说明
+
 > `nacos` 版本 `1.3.1`
 
 在阅读源码并准备调试之前，建议先 `清理一下不重要的文件和信息`（和源码无关的），笔者清理之后的结构如下：
@@ -12,7 +14,7 @@ description: Between the cup and the lip a morsel may slip.
 
 可以看得出来，现在 `Nacos` 的代码分层、代码结构上都非常的清晰，这也是我说这个项目值得长期关注的原因，感兴趣可以去看下老版本的代码，对比一下！
 
-## **项目模块**
+## **模块依赖剖析**
 
 > Tips：`example`、`test`、`distribution` 这里接不介绍了，前面两种分别是示例、测试模块，后者是打包后存放打包相关文件的模块
 

@@ -364,7 +364,7 @@ private long waitUntilNextTime(long lastTimestamp) {
 * `IdGenerator` 是何时、如何注册到 `IdGeneratorManager` 中的？
 * `IdGenerator` 如何使用？
 
-## **问题一：IdGeneratorManager剖析（组成、作用、维护管理）？**
+#### **问题一：IdGeneratorManager剖析（组成、作用、维护管理）？**
 
 **从命名就知道 `IdGeneratorManager` 的作用是负责管理 `IdGenerator` 的一个类**。
 
@@ -454,7 +454,7 @@ public class IdGeneratorManager {
 }
 ```
 
-## **问题二：IdGenerator何时、何地注册？**
+#### **问题二：IdGenerator何时、何地注册？**
 
 `EmbeddedStoragePersistServiceImpl` 这个类提供了 `register` 方法来让所有的 `IdGenerator` 在容器启动中就完成初始化并纳入它的管理（本地缓存），具体体现在这个类中的 `init()` 方法了，如下：
 
@@ -600,7 +600,7 @@ public class StandaloneProfileApplicationListener
     }
 ```
 
-## **问题三：IdGenerator使用方法**
+#### **问题三：IdGenerator使用方法**
 
 > 其实前面已经讲了如何使用，这里再重新描述一下
 

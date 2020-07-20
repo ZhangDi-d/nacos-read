@@ -172,7 +172,7 @@ message Response {
 }
 ```
 
-### Protobuf 之 Java Tutorial
+## Protobuf 之 Java Tutorial
 
 > Java 使用 protobuf 实际上也很容易，通过下面四个步骤即可
 
@@ -358,7 +358,7 @@ Log log = Log.newBuilder()
 
 当然这不是在 Java 中使用 Protobuf 的全面指南。有关更多详细的参考信息，请参考 [Protocol Buffer Language Guide](https://developers.google.com/protocol-buffers/docs/proto), [Java API Reference](https://developers.google.com/protocol-buffers/docs/reference/java), [Java Generated Code Guide](https://developers.google.com/protocol-buffers/docs/reference/java-generated), 以及 [Encoding Referenc](https://developers.google.com/protocol-buffers/docs/encoding)
 
-### Reference
+## Reference
 
 * [protobuf 3.8.0 Download](https://github.com/protocolbuffers/protobuf/releases/tag/v3.8.0)
 * [protocol-buffers guide](https://developers.google.com/protocol-buffers/docs/overview)

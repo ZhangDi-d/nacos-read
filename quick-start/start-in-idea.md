@@ -4,6 +4,8 @@ description: Better good neighbours near than relations far away.
 
 # IDE 调试
 
+## 说明
+
 > 阅读源码，首要的是下载源码，其次就是要能够在本地调试，下面介绍如何在 IDEA 启动 nacos 的服务
 
 前面介绍了 Nacos 有几个核心模块，我们直接在 IDEA 全局搜索启动类：
@@ -14,7 +16,7 @@ description: Better good neighbours near than relations far away.
 
 \*\*\*\*
 
-**IDEA 中启动 Nacos**
+## **IDEA 中启动 Nacos**
 
 这里直接给结论吧，只需要启动 `Nacos` 这一个应用程序即可（注意需要添加 VM options 以单机模式启动 `-Dnacos.standalone=true` ），如下：
 
@@ -35,7 +37,7 @@ Nacos started successfully in stand alone mode. use external storage
 
 ![](../.gitbook/assets/screenshot_1594534120232.png)
 
-**如何单独部署注册中心或配置中心？**
+## **如何单独部署注册中心或配置中心？**
 
 如果你需要单独部署 `服务发现与注册中心` 或 `配置中心` 则可以通过增加启动参数来达到你的需求：
 

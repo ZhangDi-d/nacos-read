@@ -17,6 +17,8 @@
 * [Consistency 模块](base-module/consistency/README.md)
   * [问题列表](base-module/consistency/issue-list.md)
   * [详解Nacos中的IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
+  * [Base 理论与 CAP 原则](base-module/consistency/base-theory-and-cap-principle.md)
+  * [Raft 算法](base-module/consistency/raft-algorithm.md)
 * [API 模块](base-module/api/README.md)
   * [问题列表](base-module/api/issue-list.md)
 * [Common 模块](base-module/common/README.md)

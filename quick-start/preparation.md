@@ -4,6 +4,8 @@ description: Better an open enemy than a false friend.
 
 # 下载1.3.1分支
 
+## 说明
+
 阅读源码一般不太可能通读，都是挑一些重点功能、实现区阅读，建议可以按照如下方式去阅读：
 
 * 明确项目的核心功能、亮点实现
@@ -21,7 +23,7 @@ description: Better an open enemy than a false friend.
 git clone https://github.com/<your github name>/nacos.git
 ```
 
-## **版本选择**
+## **SpringBoot集成时如何选择版本**
 
 **环境：**
 
@@ -68,7 +70,7 @@ To https://github.com.cnpmjs.org/rexlin600/nacos.git
 Branch 'feature-1.3.1' set up to track remote branch 'feature-1.3.1' from 'origin'.
 ```
 
-## **导入数据库**
+### **导入数据库**
 
 在 `nacos/distribution/conf` 目录下有一个 [nacos-mysql.sql](https://github.com/rexlin600/nacos/blob/feature-1.3.1/distribution/conf/nacos-mysql.sql)，在本地执行该数据库脚本即可，如下：
 
@@ -316,7 +318,7 @@ tenant_info
 users
 ```
 
-## **修改源码中配置**
+### **修改源码中配置**
 
 > 这里是修改数据库配置，方便后续 IDEA 调试，如果你是打包请参考 `Nacos 入门/.构建并启动` 中关于部署的相关说明
 

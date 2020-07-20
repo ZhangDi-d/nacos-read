@@ -4,6 +4,8 @@ description: Difficult circumstances serve as a textbook of life for people.
 
 # SPI与JDBC驱动加载原理
 
+## 简介
+
 `SPI`，即 `Service Provider Interface`，是 `Java` 提供的一套用于被第三方实现或者扩展的 `API`，他可以用来启用框架扩展和替换组件，整体机制如下图：
 
 > 图片来源于网络
@@ -82,6 +84,8 @@ description: Difficult circumstances serve as a textbook of life for people.
 
 ## **JDBC驱动加载原理**
 
+### **Class.froName\(\) 是如何触发初始化的？**
+
 我们来看下通过 `Class.forName()` 加载类中传入的参数 `driverName` 所指向的代码（以 MySQL 为例）：
 
 ```java
@@ -138,7 +142,7 @@ static {
 * 方式一是直接通过读取系统变量的方式
 * 方式二是通过 `ServiceLoader` 加载的方式
 
-**JDBC驱动加载方式一、方式二剖析**
+### **JDBC驱动加载方式一、方式二剖析**
 
 > DriverManager 初始化驱动
 
@@ -199,7 +203,7 @@ private static void loadInitialDrivers() {
 
 第一种加载驱动的方式很好理解，是从系统环境变量中获取 `jdbc.drivers` 指向的类路径，后续就是根据这个类路径通过 ClassLoader 去初始化加载驱动了；下面我们着重于分析下第二种加载驱动的方式，即通过 ServiceLoader 加载驱动的的过程是怎样的。
 
-**ServiceLoader讲解**
+### **ServiceLoader 剖析**
 
 我们一步一步看源码可以发现，通过上面的 `ServiceLoader.load(Driver.class);` 方法实际上并没有立即去加载驱动，而是返回了 `ServiceLoader<>(service, loader);`，对应 ServiceLoader 构造器代码如下：
 
@@ -270,7 +274,7 @@ private static void loadInitialDrivers() {
     }
 ```
 
-**DriverManager管理Driver、Connection**
+### **DriverManager管理Driver、Connection**
 
 此外，DriverManager 还提供了 Driver 管理、Connection 对象管理的方法。通过 DriverManager 获取 Connection 的方法我想大家不会面生，那么获取 Connection 的背后是什么呢，如下：
 
