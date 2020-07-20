@@ -1,8 +1,8 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [概念及架构](concept-and-structure/README.md)
-  * [逻辑架构](concept-and-structure/nacos-arch.md)
+* [基本概念](concept.md)
+* [逻辑架构](nacos-arch.md)
 * [Quick Start](quick-start/README.md)
   * [环境与版本](quick-start/warning-env-and-version.md)
   * [快速开始](quick-start/quick-start.md)

@@ -1,4 +1,4 @@
-# 概念及架构
+# 基本概念
 
 > 本文摘自 Nacos 官网：\[Nacos 概念\]\([https://nacos.io/en-us/docs/concepts.html](https://nacos.io/en-us/docs/concepts.html)\)
 

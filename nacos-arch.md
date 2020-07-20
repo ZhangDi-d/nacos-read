@@ -2,13 +2,13 @@
 
 > 阿里 Nacos 基本架构示意图（原文地址：[Nacos架构](https://nacos.io/zh-cn/docs/architecture.html)），关于基本概念这里就不再阐述了，具体请参考上一节
 
-![arch](../.gitbook/assets/screenshot_1594476906139.png)
+![arch](.gitbook/assets/screenshot_1594476906139.png)
 
 ## **逻辑架构及其组件介绍**
 
 > 阿里 Nacos 逻辑架构
 
-![arch-logic](../.gitbook/assets/image.png)
+![arch-logic](.gitbook/assets/image.png)
 
 > 其实最开始我关注 Nacos 文档还没有现在完善，目前官网文档非常完善、丰富，非常适合大家学习、挖掘其团队背后的设计思想、架构理念等；后续阅读源码的过程中不需要每个模块都精读，但是要关注一些核心模块病看懂别人的设计、实现等；此外更好的方式是学以致用，自己动手实现一个 demo 从而提高自己的能力
 
