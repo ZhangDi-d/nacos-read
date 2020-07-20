@@ -15,9 +15,7 @@ description: Hessian 是一个基于 HTTP 协议传输，使用二进制序列�
 
 ### 聊聊 RPC 框架
 
-{% hint style="success" %}
-聊聊什么是 RPC 框架，详细可参考文末参考文章 [什么是 RPC 框架](https://developer.51cto.com/art/201906/597963.htm)
-{% endhint %}
+> 详细可参考文末参考文章 [什么是 RPC 框架](https://developer.51cto.com/art/201906/597963.htm)
 
 既然我们说 Hessian 是一种轻量级 RPC 框架，那么什么又是 RPC 呢？
 
@@ -35,11 +33,7 @@ description: Hessian 是一个基于 HTTP 协议传输，使用二进制序列�
 
 * RPC 框架的核心功能就是实现上图 RPC 协议的重要部分
 
-### 聊聊序列化和反序列化
-
-{% hint style="success" %}
-聊聊序列化和反序列化
-{% endhint %}
+### 序列化和反序列化
 
 关于 Java 的序列化我想大家网上随便找都是各种吐槽其性能低、必须实现 Serrializable 接口等等。这里总结一下 Java 序列化存在的一些我们共知的一些问题 😂 ：
 
@@ -61,7 +55,7 @@ description: Hessian 是一个基于 HTTP 协议传输，使用二进制序列�
 * 学习成本
 * 语言、平台相关性
 
-### 聊聊 Hessian 在 Nacos 中应用
+### Hessian 在 Nacos 中应用
 
 下面我们看下 Nacos 是如何使用 Hessian 来实现序列化和反序列化的，在了解这之前，我们需要看下 Nacos 是如何自己封装了 Hessian 的序列化、反序列化的。
 
