@@ -102,7 +102,9 @@ public <R> R queryOne(String sql, Class<R> cls) {
 }
 ```
 
-可以看到，**最终获取数据是通过一个 innerRead\(\) 的方法异步获取数据的，获取到数据之后会最终执行反序列化并返回序列化之前数据**（这里不解析 innerRead 方法，大家理解 Nacos 是如何使用 Hessian 来进行序列化、反序列化操作即可）。
+可以看到：
+
+**最终获取数据是通过一个 innerRead\(\) 的方法异步获取数据的，获取到数据之后会最终执行反序列化并返回序列化之前数据**（这里不解析 innerRead 方法，大家理解 Nacos 是如何使用 Hessian 来进行序列化、反序列化操作即可）。
 
 ### Reference
 
