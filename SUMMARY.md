@@ -42,11 +42,11 @@
 * [Istio 模块](core-module/istio/README.md)
   * [问题列表](core-module/istio/issue-list.md)
 
-## 福利章
+## 福利章 <a id="welfare-module"></a>
 
-* [扩展知识](fu-li-zhang/external-docs/README.md)
-  * [元组Tuple](fu-li-zhang/external-docs/tuple.md)
-  * [极简UML](fu-li-zhang/external-docs/easy-uml.md)
-  * [SPI与JDBC驱动加载原理](fu-li-zhang/external-docs/spi-and-jdbc-auto-loading.md)
-  * [理解 Protobuf](fu-li-zhang/external-docs/protobuf.md)
+* [扩展知识](welfare-module/external-docs/README.md)
+  * [元组Tuple](welfare-module/external-docs/tuple.md)
+  * [极简UML](welfare-module/external-docs/easy-uml.md)
+  * [SPI与JDBC驱动加载原理](welfare-module/external-docs/spi-and-jdbc-auto-loading.md)
+  * [理解 Protobuf](welfare-module/external-docs/protobuf.md)
 
