@@ -18,7 +18,11 @@ description: 'Be just to all, but trust not all.'
 
 > 官方提供的版本关系图：[版本说明](https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
-在了解 `Nacos` 的环境要求之前，我们需要知道如何正确的选择 `Nacos` 的版本，因为很多初入坑 `Nacos` 的人会因为不清楚版本的关系导致白白浪费了时间，因为最开始文档还不完善的时候就只有自己去踩坑了！&gt; **额外说明**：关于 `Spring Cloud Alibaba` 仓库迁移
+在了解 `Nacos` 的环境要求之前，我们需要知道如何正确的选择 `Nacos` 的版本，因为很多初入坑 `Nacos` 的人会因为不清楚版本的关系导致白白浪费了时间，因为最开始文档还不完善的时候就只有自己去踩坑了！
+
+{% hint style="danger" %}
+**额外说明**：关于 `Spring Cloud Alibaba` 仓库迁移
+{% endhint %}
 
 因为 `Spring Cloud` 官方修改了各个第三方项目的发布策略，因此才有了：[通知: Spring Cloud Alibaba 仓库迁移](https://blog.csdn.net/xxscj/article/details/96310527)，这也是为什么我们去搜索 Nacos 的仓库时会看到两个版本：
 
