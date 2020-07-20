@@ -2,7 +2,7 @@
 description: nacos start
 ---
 
-# 入门
+# Quick Start
 
 ## Getting Started
 
