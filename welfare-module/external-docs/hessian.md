@@ -106,6 +106,14 @@ public <R> R queryOne(String sql, Class<R> cls) {
 
 **最终获取数据是通过一个 innerRead\(\) 的方法异步获取数据的，获取到数据之后会最终执行反序列化并返回序列化之前数据**（这里不解析 innerRead 方法，大家理解 Nacos 是如何使用 Hessian 来进行序列化、反序列化操作即可）。
 
+### 拓展：序列化工具如何选择
+
+| 类型 | 参考因素 |
+| :--- | :--- |
+| thrift/protobuf | 性能敏感、开发体验要求不高的内部系统 |
+| hessian2 | 开发体验敏感、性能有要求的内外部系统 |
+| jackson/gson/xml | 对序列化后的数据要求有良好的可读性 |
+
 ### Reference
 
 * [Hessian binary web service protocol](http://hessian.caucho.com/)
