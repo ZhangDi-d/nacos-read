@@ -1,8 +1,9 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [基本概念](concept.md)
-* [逻辑架构](nacos-arch.md)
+* [基本概念与架构](concept-and-arch-module/README.md)
+  * [基本概念](concept-and-arch-module/concept.md)
+  * [逻辑架构](concept-and-arch-module/nacos-arch.md)
 * [Quick Start](quick-start/README.md)
   * [环境与版本](quick-start/warning-env-and-version.md)
   * [构建及部署](quick-start/build-and-deploy.md)
@@ -10,7 +11,7 @@
   * [下载1.3.1分支](quick-start/preparation.md)
   * [IDE 调试](quick-start/start-in-idea.md)
   * [模块剖析](quick-start/code-and-module-structure.md)
-* [阅读须知](reading-instructions.md)
+  * [阅读须知](quick-start/reading-instructions.md)
 
 ## 基础模块 <a id="base-module"></a>
 
