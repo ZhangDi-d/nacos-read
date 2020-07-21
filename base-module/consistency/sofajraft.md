@@ -162,9 +162,50 @@ PeerId peer = JRaftUtils.getPeerId("localhost:8080");
 Configuration conf = JRaftUtils.getConfiguration("localhost:8081,localhost:8082,localhost:8083");
 ```
 
-###  回调 Cloasure 和状态 Status
+###  回调 Closure 和状态 Status
 
+Closure，也叫闭包，在 JRaft 中我们实际上可以看成一个简单的 callback 接口，JRaft 中提供的大量方法都是基于异步的回调模式，结果通过此接口实现：
 
+```java
+package com.alipay.sofa.jraft;
+
+/**
+ * Callback closure.
+ *
+ * @author boyan (boyan@alibaba-inc.com)
+ *
+ * 2018-Apr-03 11:07:05 AM
+ */
+public interface Closure {
+
+    /**
+     * Called when task is done.
+     *
+     * @param status the task status.
+     */
+    void run(final Status status);
+}
+```
+
+回调结果通过 Status 获取， `Status#isOk()` 告诉你成功还是失败，错误码和错误信息可以通过另外两个方法获取：
+
+```java
+boolean success= status.isOk();
+RaftError error = status.getRaftError(); // 错误码，RaftError 是一个枚举类
+String errMsg = status.getErrorMsg(); // 获取错误详情
+```
+
+另外，Status 也提供了一些简单的方法来创建，如下：
+
+```java
+// 创建一个成功的状态
+Status ok = Status.OK();
+// 创建一个失败的错误，错误信息支持字符串模板
+String filePath = "/tmp/test";
+Status status = new Status(RaftError.EIO, "Fail to read file from %s", filePath);
+```
+
+###  任务 Task
 
 
 
