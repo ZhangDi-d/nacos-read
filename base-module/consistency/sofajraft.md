@@ -8,6 +8,8 @@ description: >-
 
 ## 简介
 
+> 本文内容摘选自 [SOFAJRaft 指南](https://www.sofastack.tech/projects/sofa-jraft/overview/)
+
 SOFAJRaft 是一个基于 Raft 一致性算法的生产级高性能 Java 实现，支持 MULTI-RAFT-GROUP，适用于高负载低延迟的场景。 使用 SOFAJRaft 你可以专注于自己的业务领域，由 SOFAJRaft 负责处理所有与 Raft 相关的技术难题，并且 SOFAJRaft 非常易于使用，你可以通过几个示例在很短的时间内掌握它。
 
 {% hint style="danger" %}
@@ -51,8 +53,15 @@ SOFAJRaft 编译要求：
   <tbody>
     <tr>
       <td style="text-align:left">Node</td>
-      <td style="text-align:left">Raft &#x5206;&#x7EC4;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x8FDE;&#x63A5;&#x5C01;&#x88C5;&#x5E95;&#x5C42;&#x7684;&#x6240;&#x6709;&#x670D;&#x52A1;&#xFF0C;&#x7528;&#x6237;&#x770B;&#x5230;&#x7684;&#x4E3B;&#x8981;&#x670D;&#x52A1;&#x63A5;&#x53E3;&#xFF0C;&#x7279;&#x522B;&#x662F; <code>apply(task)</code> &#x7528;&#x4E8E;&#x5411;
-        raft group &#x7EC4;&#x6210;&#x7684;&#x590D;&#x5236;&#x72B6;&#x6001;&#x673A;&#x96C6;&#x7FA4;&#x63D0;&#x4EA4;&#x65B0;&#x4EFB;&#x52A1;&#x5E94;&#x7528;&#x5230;&#x4E1A;&#x52A1;&#x72B6;&#x6001;&#x673A;&#x3002;</td>
+      <td style="text-align:left">
+        <p>Raft &#x5206;&#x7EC4;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x8FDE;&#x63A5;&#x5C01;&#x88C5;&#x5E95;&#x5C42;&#x7684;&#x6240;&#x6709;&#x670D;&#x52A1;&#xFF0C;&#x7528;&#x6237;&#x770B;&#x5230;&#x7684;&#x4E3B;&#x8981;&#x670D;&#x52A1;&#x63A5;&#x53E3;&#xFF0C;&#x7279;&#x522B;&#x662F; <code>apply(task)</code> &#x7528;&#x4E8E;&#x5411;
+          raft group &#x7EC4;&#x6210;&#x7684;&#x590D;&#x5236;&#x72B6;&#x6001;&#x673A;&#x96C6;&#x7FA4;&#x63D0;&#x4EA4;&#x65B0;&#x4EFB;&#x52A1;&#x5E94;&#x7528;&#x5230;&#x4E1A;&#x52A1;&#x72B6;&#x6001;&#x673A;&#x3002;
+          <br
+          />
+        </p>
+        <p><em><b>&#x6CE8;&#x610F;&#xFF1A;Node &#x63A5;&#x53E3;&#x8868;&#x793A;&#x4E00;&#x4E2A; raft &#x7684;&#x53C2;&#x4E0E;&#x8282;&#x70B9;&#xFF0C;&#x4ED6;&#x7684;&#x89D2;&#x8272;&#x53EF;&#x80FD;&#x662F; leader&#x3001;follower &#x6216;&#x8005; candidate&#xFF0C;&#x968F;&#x7740;&#x9009;&#x4E3E;&#x8FC7;&#x7A0B;&#x800C;&#x8F6C;&#x53D8;&#x3002;</b></em>
+        </p>
+      </td>
     </tr>
     <tr>
       <td style="text-align:left">Log storage</td>
@@ -206,6 +215,87 @@ Status status = new Status(RaftError.EIO, "Fail to read file from %s", filePath)
 ```
 
 ###  任务 Task
+
+Task 是用户使用 JRaft 最核心的类之一，它用于向一个 Raft Replicated Group 提交一个任务，这个任务提交到 Leader，然后再复制到其他的 Follower 节点。其中，Task 包括：
+
+* **ByteBuffer data**：提交的任务数据，用户应该将要复制的业务数据通过一定序列化方式（比如 Java/Hessian2）序列化为一个 ByteBuffer，放到 Task 中。
+* **long expectedTerm = -1**：任务提交时预期的 Leader term，默认是 -1，在任务应用到状态机之前不会检查 leader 是否发生了变更，如果提供了（从状态机回调中获取，参见下文），那么在将任务应用到状态机之前，会检查 term 是否匹配，如果不匹配将拒绝该任务。
+* **Cl​osure done**：任务回调，在任务完成的时候通知此对象，无论成功还是失败。这个 closure 将在 `StateMachine#onApply(iterator)` 方法应用到状态机的时候，可以拿到并调用，一般用于客户端应答的返回。
+
+#### 创建一个 Task 实例：
+
+```java
+Closure done = ...;
+Task task = new Task();
+task.setData(ByteBuffer.wrap("hello".getBytes());
+task.setClosure(done);
+```
+
+任务的 closure 还可以使用特殊的 TaskClosure 接口，该接口额外提供了一个 onCommitted 回调方法：
+
+```java
+public interface TaskClosure extends Closure {
+
+    /**
+     * Called when task is committed to majority peers of the RAFT group but before it is applied to state machine.
+     * 
+     * <strong>Note: user implementation should not block this method and throw any exceptions.</strong>
+     */
+    void onCommitted();
+}
+```
+
+当 jraft 发现 task 的 done 是 TaskClosure 的时候，会在 RAFT 日志提交到 RAFT group 之后（并复制到多数节点），应用到状态机之前调用 onCommitted 方法。
+
+{% hint style="info" %}
+提交的任务在 JRaft 是如何被提交的呢？
+{% endhint %}
+
+此外，提交的任务在 JRaft 内部会做累积批量提交，应用到状态机的是一个 task 迭代器，通过 `com.alipay.sofa.jraft.Iterator` 接口表示，一个典型的例子：
+
+```java
+Iterator it = ....
+//遍历迭代任务列表
+while(it.hasNext()){
+  ByteBuffer data = it.getData(); // 获取当前任务数据
+ 
+  Java Closure done = it.getDone();  // 获取当前任务的 closure 回调
+  long index = it.getIndex();  // 获取任务的唯一日志编号，单调递增， jraft 自动分配
+  long term = it.getTerm();  // 获取任务的 leader term
+  ...逻辑处理... 
+  it.next(); // 移到下一个task
+}
+```
+
+请注意， 如果 task 没有设置 closure，那么 done 可能会是 null，**另外在 follower 节点上， done 也是 null，因为 done 不会被复制到除了 leader 节点之外的其他 raft 节点**。
+
+这里有一个优化技巧，**通常 leader 获取到的 done closure，可以扩展包装一个 closure 类 包含了没有序列化的用户请求，那么在逻辑处理部分可以直接从 closure 获取到用户请求，无需通过 `data` 反序列化得到，减少了 leader 的 CPU 开销**，具体可参见 counter 例子
+
+### JRaft 服务端
+
+JRaft 服务端编程的主要接口和类，核心如下：
+
+* **状态机 StateMachine** ：业务逻辑实现的主要接口，状态机运行在每个 raft 节点上，提交的 task 如果成功，最终都会复制应用到每个节点的状态机上。
+* **Raft 节点 Node** ： 表示一个 raft 节点，可以提交 task，以及查询 raft group 信息，比如当前状态、当前 leader/term 等。
+  * 核心方法是 `void apply(Task task)` ：**提交一个新任务到 raft group，此方法是线程安全并且非阻塞**
+* **RPC 服务**： raft 节点之间通过 RPC 服务通讯（选举、复制等）
+* **RaftGroupService**：一个辅助编程框架类，方便地“组装”起一个 raft group 节点。
+
+_注：关于以上核心类和接口相关的方法这里就不一一描述了，建议直接参考官方文章的详细说明（见文末 SOFAJRaft 指南），下同。_
+
+### JRaft 客户端
+
+JRaft 服务端在构建完集群之后，客户端需要跟 raft group 交互，客户端的一些核心类如下：
+
+* **路由表 RouteTable**：维护到 raft group 的路由信息，全局单例！
+* **CLI 服务**：CLI 服务就是 Client CommandLine Service，是 jraft 在 raft group 节点提供的 RPC 服务中暴露了一系列用于管理 raft group 的服务接口，例如增加节点、移除节点、改变节点配置列表、重置节点配置以及转移 leader 等功能。
+* **RPC 服务**：客户端的通讯层都依赖 Bolt 的 RpcClient，封装在 CliClientService 接口中，实现类就是 BoltCliClientService 。
+  *  可以通过 BoltCliClientService 的 getRpcClient 方法获取底层的 bolt RpcClient 实例，用于其他通讯用途，做到资源复用。
+  * RouteTable 更新 leader 信息同样需要传入 CliClientService 实例，用户应该尽量复用这些底层通讯组件，而非重复创建用。
+
+### 节点配置如何变更？
+
+节点配置可以通过 CliService，也可以通过 Leader 节点 Node 的系列方法来变更，实质上 CliService 都是转发到 Leader 节点执行的。
 
 
 
