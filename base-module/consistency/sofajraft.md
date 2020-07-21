@@ -297,16 +297,31 @@ JRaft 服务端在构建完集群之后，客户端需要跟 raft group 交互�
 
 节点配置可以通过 CliService，也可以通过 Leader 节点 Node 的系列方法来变更，实质上 CliService 都是转发到 Leader 节点执行的。
 
+### 线性一致读
 
+> 线性一致读，即对于在某个时刻 t1 写入一个值，那么在 t1 之后，我们一定能读到这个值并且不可能读到 t1 之前的值
 
+由于 Raft 本身就是一个为了实现分布式环境下面线性一致性的算法，因此我们可以通过 raft 非常方便的实现线性 read，也就是将读请求走一次 raft log，等这个 log 提交之后，在 apply 的时候从状态机里面读取值，我们就一定能够保证这个读取到的值是满足线性要求的。
 
+另外，因为每次 read 都需要走一次 raft 流程，所以性能较低，因此不推荐大家这样使用。**所以 在 JRaft 中还实现了 RAFT 论文中提到 ReadIndex 和 Lease Read 优化，实现更高效率的线性一致读实现。**
 
+### **其他**
 
+**如果需要了解 JRaft 更多内容可以参考文末的 SOFAJRaft 指南：**
+
+* 故障和保证
+* Metrics 监控
+* 性能优化与建议
+* 如何基于 SPI 扩展
+* 排查故障工具
+* Rocksdb 配置更改
+* 只读成员（Learner）
 
 ## Reference
 
 * [SOFAJRaft](https://github.com/sofastack/sofa-jraft)
 * [SOFAJRaft 指南](https://www.sofastack.tech/projects/sofa-jraft/overview/)
+* [Raft 线性一致读](https://pingcap.com/blog-cn/lease-read/)
 
 
 
