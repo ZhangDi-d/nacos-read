@@ -83,6 +83,21 @@ Raft 要求系统在任意时刻最多只能有一个 Leader，正常工作期�
 * Follower 不会主动提出请求，只是响应 Leader 和 Candidate 的请求
 * Leader 负责处理所有客户端请求（假如某个客户端先连接到 Follower，那么 Follower 要负责把这个客户端重定向到 Leader）
 
+## 日志结构
+
+日志的数据结构总总体上可以分为：**term**（任期号）、**command**（状态机需要执行的指令内容）、**index**（索引，日志条目在日志中的位置），日至结构图如下：
+
+![log-struc](../../.gitbook/assets/log-struc.jpg)
+
+如上图所示，总共有 12 条日志条目，其中：
+
+* Follower 和 Leader 的日志可能存在不同步
+* **Leader 强制 Follower 复制它的日志来处理日志的不一致，Follower 上的不一致的日志会被 Leader 的日志覆盖**
+  * Leader为了使Followers的日志同自己的一致，Leader需要找到Followers同它的日志一致的地方，然后覆盖Followers在该位置之后的条目）
+  * Leader 会从后往前试，每次 AppednEntries 失败后尝试前一个日志条目，直到成功找到每个 Follower 的日志的一致位的 index，然后逐条覆盖 Follower 在该 index 之后的日志条目
+
+
+
 ## 日志复制
 
 > Raft 的日志由日志有序编号（log index）组成，每个日志条目（log entries）包含了它被创建时的任期号（term）
@@ -97,19 +112,6 @@ Raft 维护着以下日志机制从而维护一个不同服务器的日志之间
 
 * 如果在不同的日志中的两个条目拥有相同的索引和任期号，那么他们存储了相同的指令
 * 如果在不同的日志中的两个条目拥有相同的索引和任期号，那么他们之前的所有日志条目也全部相同
-
-### 日志结构
-
-日志的数据结构总总体上可以分为：**term**（任期号）、**command**（状态机需要执行的指令内容）、**index**（索引，日志条目在日志中的位置），日至结构图如下：
-
-![log-struc](../../.gitbook/assets/log-struc.jpg)
-
-如上图所示，总共有 12 条日志条目，其中：
-
-* Follower 和 Leader 的日志可能存在不同步
-* **Leader 强制 Follower 复制它的日志来处理日志的不一致，Follower 上的不一致的日志会被 Leader 的日志覆盖**
-  * Leader为了使Followers的日志同自己的一致，Leader需要找到Followers同它的日志一致的地方，然后覆盖Followers在该位置之后的条目）
-  * Leader 会从后往前试，每次 AppednEntries 失败后尝试前一个日志条目，直到成功找到每个 Follower 的日志的一致位的 index，然后逐条覆盖 Follower 在该 index 之后的日志条目
 
 ## 安全性
 
