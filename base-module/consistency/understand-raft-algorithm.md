@@ -2,7 +2,7 @@
 description: Raft 算法能够解决分布式环境下的一致性问题
 ---
 
-# Raft 算法
+# 理解 Raft 算法
 
 ## Raft 算法概念
 
