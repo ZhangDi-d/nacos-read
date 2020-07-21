@@ -18,6 +18,16 @@ description: CAP：Consistency、Availability、Partition Tolerance
 
 **如何在复杂的情形下解决上述的分布式问题，这正是分布式一致性算法需要解决的问题！**
 
+## **一致性状态机**
+
+对于一个无限增长的序列 a\[1, 2, 3…\], 如果对于任意整数 i, a\[i\] 的值满足分布式一致性，这个系统就满足一致性状态机的要求。 
+
+基本上所有的系统都会有源源不断的操作**，**这时候单独对某个特定的值达成一致是不够的。为了真实系统保证所有的副本的一致性，通常会把操作转化为 [write-ahead-log](https://en.wikipedia.org/wiki/Write-ahead_logging)\(简称WAL\)。然后让系统的所有副本对WAL保持一致，这样每个进程按照顺序执行WAL里的操作，就能保证最终的状态是一致的。（_注：图片来自互联网_）
+
+
+
+![state-machine](../../.gitbook/assets/state-machine.jpg)
+
 ## **多副本状态机**
 
 {% hint style="success" %}

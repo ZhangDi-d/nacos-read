@@ -19,6 +19,7 @@
   * [详解Nacos中的IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
   * [Base 理论与 CAP 原则](base-module/consistency/base-theory-and-cap-principle.md)
   * [理解 Raft 算法](base-module/consistency/understand-raft-algorithm.md)
+  * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
 * [API 模块](base-module/api/README.md)
   * [问题列表](base-module/api/issue-list.md)
 * [Common 模块](base-module/common/README.md)

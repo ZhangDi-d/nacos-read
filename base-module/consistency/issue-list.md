@@ -9,8 +9,9 @@ description: Bind the sack before it be full.
 * [x] SPI 与 JDBC 驱动自动加载原理（福利章）
 * [x] 理解 Protobuf
 * [x] 理解 Hessian
-* [ ] 探究 Raft 算法及在 Nacos 中的运用
-* [ ] 不得不知的 CAP 理论
+* [x] Base理论与 CAP 原则
+* [x] 理解 Raft 算法
+* [ ] 蚂蚁金服开源 SOFAJRaft
 * [ ] 
 
 

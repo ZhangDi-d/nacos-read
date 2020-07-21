@@ -8,7 +8,7 @@ description: Raft 算法能够解决分布式环境下的一致性问题
 
 Raft 算法是由斯坦福大学提出的一种分布式协议，相比 Paxos 而言更加的容易理解。Raft 算法是从多副本状态机的角度出发，它用来用于管理多副本状态机的日志复制从而实现了和 Paxos 同样的功能。
 
-之所以 Raft 算法相对 Paxos 算法更加容易理解，原因是 Raft 算法将复杂的分布式一致性问题拆解为几个子问题：
+之所以 Raft 算法相对 Paxos 算法更加容易理解，原因是 Raft 算法不允许类似 Paxos 中的乱序提交，并且将复杂的分布式一致性问题拆解为几个子问题：
 
 * Leader 选举（Leader election）
 * 日志复制（Log replicaiton）
@@ -38,6 +38,14 @@ Raft 算法将系统中的角色分为几个部分（_注：图片来自互联�
 * **Candiadte**：Leader 选举过程中的临时角色
 
 ![raft-role](../../.gitbook/assets/raft-role.jpg)
+
+## Message 的三种类型
+
+| 类型 | 描述 |
+| :--- | :--- |
+| **RequestVote RPC** | 由 Candidate 发出，用于发送投票请求 |
+| **AppendEntries RPC** | 由 Leader 发出，用于 Leader 向 Follower 复制日志条目，也会用作 Heartbeat（日志条目为空即为 Heartbeat） |
+| **InstallSnapshot RPC** | 由 Leader 发出，用于快照传输 |
 
 ## Raft 选举
 
