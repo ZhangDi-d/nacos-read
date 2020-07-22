@@ -34,7 +34,6 @@
   * [问题列表](core-module/client/issue-list.md)
 * [Core 模块](core-module/core/README.md)
   * [问题列表](core-module/core/issue-list.md)
-  * [Nacos 调试显示各个模块日志](core-module/core/core-log.md)
 * [Cmdb 模块](core-module/cmdb/README.md)
   * [问题列表](core-module/cmdb/issue-list.md)
 * [Naming 模块](core-module/naming/README.md)
