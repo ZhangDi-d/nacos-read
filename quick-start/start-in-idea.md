@@ -14,7 +14,33 @@ description: Better good neighbours near than relations far away.
 
 可以看到除了 `PasswordEncoderUtil` 是一个测试类之外，启动类有 6 个，但是我们应该如何去正常启动 Nacos 服务呢？
 
-\*\*\*\*
+## 修改 nacos.xml
+
+为了我们调试时更好的看到日志，我们需要修改一下 nacos.xml 文件以支持更加丰富的日志输出，在 core 模块下的 `META-INF/logback/nacos.xml` 的 `springProfile` 节点下新增如下内容（如果不够还可以新增其他的 logger）：
+
+```markup
+        <!-- 额外 Log 控制台打印 -->
+        <logger name="com.alibaba.nacos.core">
+            <appender-ref ref="CONSOLE"/>
+            <level value="INFO"/>
+        </logger>
+        <logger name="com.alibaba.nacos.naming">
+            <appender-ref ref="CONSOLE"/>
+            <level value="INFO"/>
+        </logger>
+        <logger name="com.alibaba.nacos.config">
+            <appender-ref ref="CONSOLE"/>
+            <level value="INFO"/>
+        </logger>
+        <logger name="com.alibaba.nacos.address">
+            <appender-ref ref="CONSOLE"/>
+            <level value="INFO"/>
+        </logger>
+        <logger name="com.alibaba.nacos.client">
+            <appender-ref ref="CONSOLE"/>
+            <level value="INFO"/>
+        </logger>
+```
 
 ## **IDEA 中启动 Nacos**
 
