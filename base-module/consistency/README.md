@@ -16,20 +16,20 @@ E:.
 │  │  │          └─nacos
 │  │  │              └─consistency // consistency 包
 │  │  │                  │  CommandOperations.java // 操作维护命令界面接口
-│  │  │                  │  Config.java // 配置
-│  │  │                  │  ConsistencyProtocol.java // 一致性协议
+│  │  │                  │  Config.java // 一致性协议关联对象配置
+│  │  │                  │  ConsistencyProtocol.java // 一致性协议抽象类
 │  │  │                  │  IdGenerator.java // ID生成器
-│  │  │                  │  LogProcessor.java // 日志函数是处理器
+│  │  │                  │  LogProcessor.java // 功能模块使用一致性协议抽象处理器
 │  │  │                  │  ProtocolMetaData.java // 协议元数据
 │  │  │                  │  SerializeFactory.java // 序列化工厂类
 │  │  │                  │  Serializer.java // 序列化接口
 │  │  │                  ├─ap //  AP 协议
 │  │  │                  ├─cp // CP 协议
-│  │  │                  ├─entity // 实体类
+│  │  │                  ├─entity // protobuf自动生成类
 │  │  │                  ├─exception // 异常
 │  │  │                  ├─serialize // 序列化
 │  │  │                  └─snapshot // 快照
-│  │  ├─proto // protobuf协议
+│  │  ├─proto // protobuf协议文件
 │  │  └─resources // 资源目录
 │  └─test // 测试目录
 ```
