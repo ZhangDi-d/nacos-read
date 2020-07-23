@@ -50,7 +50,60 @@ _**注意：由于一致性协议涉及到 core 模块，所以这部分内容�
 5. 在 `ConsistencyProtocol` 下目前有 `APProtocol`、`CPProtocol` 两个接口分别对应 AP、CP 的一致性协议抽象，这两个抽象分别对应 `LogProcessor4AP`、`LogProcessor4CP` 这两个抽象类；LogProcessor4CP 抽象类的实现为 `DistributedDatabaseOperateImpl` 
 6. 针对 AP 场景，`LogProcessor4AP` 不需要在扩展额外的方法；针对 CP 场景由于存在快照的概念，因此 `LogProcessor4CP` 需要扩展一个 `loadSnapshotOperate()` 方法；这个方法由 LogProcessor 自行决定选用哪个 SnapshotOperate 进行保存、加载操作
 
+### ConsistencyProtocol 接口
 
+ConsistencyProtocol 是 Nacos 一致性协议的抽象，如下：
+
+```java
+public interface ConsistencyProtocol<T extends Config, P extends LogProcessor> extends CommandOperations {
+
+    /**
+     * 一致性协议初始化，根据 Config 实现类；目前只有 JRaft 一致性协议的初始化
+     */
+    void init(T config);
+
+    /**
+     * 增加一个日志处理器
+     */
+    void addLogProcessors(Collection<P> processors);
+
+    /**
+     * 一致性协议的元数据信息
+     */
+    ProtocolMetaData protocolMetaData();
+
+    /**
+     * 同步获取数据
+     */
+    Response getData(GetRequest request) throws Exception;
+
+    /**
+     * 异步获取数据
+     */
+    CompletableFuture<Response> aGetData(GetRequest request);
+
+    /**
+     * 同步数据提交，在 Datum 中已携带相应的数据操作信息
+     */
+    Response submit(Log data) throws Exception;
+
+    /**
+     * 异步数据提交，在 Datum 中已携带相应的数据操作信息，返回一个Future，自行操作，提交发生的异常会在CompleteFuture中
+     */
+    CompletableFuture<Response> submitAsync(Log data);
+
+    /**
+     * 新的成员节点列表，一致性协议自行处理相应的成员节点是加入还是离开
+     */
+    void memberChange(Set<String> addresses);
+
+    /**
+     * 一致性协议服务关闭
+     */
+    void shutdown();
+
+}
+```
 
 
 
