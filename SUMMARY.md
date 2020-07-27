@@ -23,6 +23,7 @@
   * [理解 Raft 算法](base-module/consistency/understand-raft-algorithm.md)
   * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
   * [一致性协议抽象层](base-module/consistency/consistency-in-nacos.md)
+  * [JRaft 服务管理实现](base-module/consistency/jraft-maintain-service.md)
 * [API 模块](base-module/api/README.md)
   * [问题列表](base-module/api/issue-list.md)
 * [Common 模块](base-module/common/README.md)

@@ -69,7 +69,7 @@ public interface CommandOperations {
 
 可以通过前面的 UML 看出，**JRaftProtocol** 这个类最终实现了一致性协议（CP 模式）。
 
-总之，CommandOperations 接口是为了给底层实现一致性协议的实现类提供了用于操作、维护 raft group 的实现定义，由于现在 Nacos 采用的是 JRaft 作为底层的一致性协议具体实现，因此这个操作维护 raft group 也是借助 JRaft 的 CliServer 实现的（后面的章节会说明）。
+总之，CommandOperations 接口是为了给底层实现一致性协议的实现类提供了用于操作、维护 raft group 的实现定义，由于_现在 Nacos 采用的是 JRaft 作为底层的一致性协议具体实现，因此这个操作维护 raft group 也是借助 JRaft 的 CliServer 实现的_（后面的章节会讲解）。
 
 _**换句话说：Raft 协议是针对 CP 模式使用的，因此 AP 模式不关心**_
 
@@ -339,7 +339,7 @@ public abstract class LogProcessor4CP extends LogProcessor {
 
 由于 CP 模式在 Nacos 中是通过 JRaft 实现，本质上还是属于 Raft 算法的范畴，因此存在快照的概念，所以相比 AP 模式，CP 模式需要多一个加载快照处理程序的方法（如上面源码）。
 
-目前，Nacos 中通过 Derby 实现了快照存储的处理操作，具体实现后续会单独讲解。
+目前，_Nacos 中通过 Derby 实现了快照存储的处理操作，具体实现后续会单独讲解_。
 
 ## 小结
 

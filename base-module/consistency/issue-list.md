@@ -13,7 +13,7 @@ description: Bind the sack before it be full.
 * [x] 理解 Raft 算法
 * [x] 蚂蚁金服开源 SOFAJRaft
 * [ ] 事件发布与订阅、观察者模式
-* [ ] Nacos 中的一致性协议抽象
+* [x] Nacos 中的一致性协议层
 * [ ] 
 
 
