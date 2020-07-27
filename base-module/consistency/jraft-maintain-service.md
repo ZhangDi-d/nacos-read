@@ -3,10 +3,12 @@
 ## 简介
 
 {% hint style="success" %}
-JRaft 服务实现具体是通过 JRaftMaintainService 实现的
+JRaft 服务实现实质上就是通过 JRaftServer 获取一个 CliService 实现对 raft group 的服务管理，具体的实现封装体现在 JRaftOps 枚举类中
 {% endhint %}
 
-Jraft 服务实现实质上就是通过 JRaftServer 获取一个 CliService 实现对 raft group 的服务管理，具体的封装体现在 JRaftOps 枚举类中。
+Nacos 实现对节点、集群、快照的管理与维护实际上是借助于 JRaft 这个库完成的，具体到源码就是 Nacos 中的 JRaftMaintainService 服务实现类，下面我们将讲解这个类是如何完成对于 raft group 的服务管理的（Leader 转移、节点移除与变更、重置集群、执行快照等）
+
+下面我们将详细讲解 JRaftMaintainService 是如何实现服务管理的。
 
 ## JRaftMaintainService
 
@@ -286,4 +288,11 @@ public enum JRaftOps {
 ```
 
 可以看出，最终实现还是依托于 JRaft 的 CliService 实现的枚举类中定义的诸多 command
+
+## 小结
+
+可以从上面的分析看出如下两大点信息：
+
+* Nacos 的 JRaftMaintainService 内部维护了一个 JRaftServer 的成员变量，通过这个成员变量来实现对于节点、集群、快照的管理操作
+* 实际上实现上述这些操作是通过 JRaft 依赖库提供的功能，包括对于 Leader 的变更、节点信息变更与移除、集群信息重载、执行快照等操作（见 JRaftOps 定义的枚举中的实现方法）
 

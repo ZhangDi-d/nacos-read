@@ -16,6 +16,7 @@ description: Big mouthfuls ofter choke.
 * [x] 蚂蚁金服开源 SOFAJRaft
 * [ ] 事件发布与订阅、观察者模式
 * [x] Nacos 中的一致性协议层
+* [ ] JRaft 服务管理
 
 
 

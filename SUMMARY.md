@@ -17,7 +17,7 @@
 * [Consistency 模块](base-module/consistency/README.md)
   * [详解 IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
   * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
-  * [一致性协议抽象层](base-module/consistency/consistency-in-nacos.md)
+  * [Nacos 中的一致性协议层](base-module/consistency/consistency-in-nacos.md)
   * [JRaft 服务管理](base-module/consistency/jraft-maintain-service.md)
 * [API 模块](base-module/api.md)
 * [Common 模块](base-module/common.md)
