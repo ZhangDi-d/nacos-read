@@ -19,6 +19,7 @@
   * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
   * [Nacos 中的一致性协议层](base-module/consistency/consistency-in-nacos.md)
   * [JRaft 服务管理](base-module/consistency/jraft-maintain-service.md)
+  * [Nacos 中的快照存储策略](base-module/consistency/snapshot-storage-snapshot-in-nacos.md)
 * [API 模块](base-module/api.md)
 * [Common 模块](base-module/common.md)
 

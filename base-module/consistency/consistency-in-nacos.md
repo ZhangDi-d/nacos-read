@@ -357,6 +357,6 @@ public abstract class LogProcessor4CP extends LogProcessor {
 
 > 🚩 后续文章我们先解答本文中提到的两个问题：
 
-* **Nacos 是如何实现对节点、集群、快照的管理与维护的？**
-* **Nacos 中是如何通过 Derby 实现了快照存储的处理操作的？**
+* **Nacos 是如何实现对节点、集群、快照的管理与维护的？（传送门：**[**JRaft 服务管理**](jraft-maintain-service.md)**）**
+* **Nacos 中是如何通过 Derby 实现了快照存储的处理操作的？（传送门：**[**Nacos 中的快照存储策略**](snapshot-storage-snapshot-in-nacos.md)**）**
 
