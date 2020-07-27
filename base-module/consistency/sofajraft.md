@@ -8,6 +8,8 @@ description: >-
 
 ## 简介
 
+_**建议：在阅读本章节之前请先阅读扩展知识中的关于 CAP、Hessian、Protobuf、Raft算法 等的介绍！**_
+
 > 本文内容摘选自 [SOFAJRaft 指南](https://www.sofastack.tech/projects/sofa-jraft/overview/)
 
 SOFAJRaft 是一个基于 Raft 一致性算法的生产级高性能 Java 实现，支持 MULTI-RAFT-GROUP，适用于高负载低延迟的场景。 使用 SOFAJRaft 你可以专注于自己的业务领域，由 SOFAJRaft 负责处理所有与 Raft 相关的技术难题，并且 SOFAJRaft 非常易于使用，你可以通过几个示例在很短的时间内掌握它。
