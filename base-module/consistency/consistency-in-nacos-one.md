@@ -5,9 +5,9 @@
 {% hint style="info" %}
 Nacos 在 1.3.0 重新构建了内核，修改内容比较大，这里我们主要关注以下几点
 
-1. **nacos内部事件机制**
-2. **nacos一致性协议层**
-3. **对于AP协议以及CP协议的统一抽象**
+1. **nacos 内部事件机制**
+2. **nacos 一致性协议层**
+3. **对于 AP 协议以及 CP 协议的统一抽象**
 {% endhint %}
 
 前面讲了很多内容实际上都是为了接下来介绍 Nacos 中的一致性协议做准备，简单回顾一下：
@@ -24,7 +24,7 @@ Nacos 在 1.3.0 重新构建了内核，修改内容比较大，这里我们主�
 
 _**注意：由于一致性协议涉及到 core 模块，所以这部分内容会提前讲到 core 模块的源码内容**_
 
-## Nacos 一致性协议抽象
+## Nacos 一致性协议层
 
 在前面的**`基本概念与架构`**一章我们可以从**`逻辑架构`**这一节中看出**一致性协议层**在 Nacos 中是最为核心的一层，它定义了 Nacos 整体的一致性协议抽象，由于在一致性协议因为我们必须考虑分区容错性，所以就分为了两大类：
 
@@ -50,7 +50,7 @@ _**注意：由于一致性协议涉及到 core 模块，所以这部分内容�
 5. 在 `ConsistencyProtocol` 下目前有 `APProtocol`、`CPProtocol` 两个接口分别对应 AP、CP 的一致性协议抽象，这两个抽象分别对应 `LogProcessor4AP`、`LogProcessor4CP` 这两个抽象类；LogProcessor4CP 抽象类的实现为 `DistributedDatabaseOperateImpl` 
 6. 针对 AP 场景，`LogProcessor4AP` 不需要在扩展额外的方法；针对 CP 场景由于存在快照的概念，因此 `LogProcessor4CP` 需要扩展一个 `loadSnapshotOperate()` 方法；这个方法由 LogProcessor 自行决定选用哪个 SnapshotOperate 进行保存、加载操作
 
-### CommandOperations 接口
+### 一致性协议操作接口
 
 从目前的 Nacos 一致性协议实现上来看，只有 CP 模式实现了这个接口，我们可以看下这个接口相关的 UML 图：
 
@@ -78,7 +78,7 @@ public interface CommandOperations {
 
 _**换句话说：Raft 协议是针对 CP 模式使用的，因此 AP 模式不关心**_
 
-### ConsistencyProtocol 接口
+### 一致性协议接口
 
 ConsistencyProtocol 是 Nacos 一致性协议的高层抽象，定义了以下接口
 
@@ -142,7 +142,7 @@ public interface ConsistencyProtocol<T extends Config, P extends LogProcessor> e
 }
 ```
 
-### CPProtocol 与 APProtocol 接口
+### AP、CP协议抽象接口
 
 这两个接口都集成自 ConsistencyProtocol，二者分别定义了 Nacos 中 CP、AP 模式下，一致性协议的定义，如下：
 
@@ -165,7 +165,7 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
 
 唯一不同的点在于 CP 模式采用的是 JRaft 实现，而 Raft 一致性协议中存在 Leader、Follower 的概念，所以 CPProtocol 需要额外提供一个 `isLeader()` 的方法用来返回此节点是否为 Leader 节点。
 
-### ProtocolMetaData  final 类
+### 协议元数据类
 
 我们先看下这个抽象类内部的协议元数据对象 ProtocolMetaData 的结构，其内部维护了一个_**线程池大小固定为 4 的 Executor**_ 、_**一个结构为 Map&lt;String, Map&lt;Object, Object&gt;&gt; 的 metaDataMap 对象**_，源码如下：
 
@@ -246,9 +246,9 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
 
 🌠 相当于我们的 ProtocolMetaData 的 metaDataMap 本身是一个初始容量为 4 的 Map，其 value 是一个 MetaData 对象；这个 MetaData 对象内部有一个 itemMap，这个 itemMap 是一个初始容量为 8 的 Map，并且这个 Map 的 value 是一个 ValueItem 对象。
 
-### AbstractConsistencyProtocol 抽象类
+### 一致性协议抽象基类
 
-接着我们再看下 AbstractConsistencyProtocol 抽象类的源代码：
+接着我们再看下抽象一致性协议基类 AbstractConsistencyProtocol 的源代码：
 
 ```java
 public abstract class AbstractConsistencyProtocol<T extends Config, L extends LogProcessor>
@@ -291,5 +291,68 @@ public abstract class AbstractConsistencyProtocol<T extends Config, L extends Lo
 
 可以看见，这个类实际上是将一致性协议的元数据抽象出来作为了一致性协议的基类；不同的一致性协议可以通过继承它从而实现对协议元数据的管理、可以获取或重载日志处理器
 
+### 日志处理器抽象
 
+目前 Nacos 中定义了 LogProcessor 抽象类来定义不同的一致性协议实现从而扩展自己的 LogDispatcher；而 Nacos 中目前有两个日志处理器的实现：LogProcessor4AP、LogProcessor4CP 日志处理器，我们先来看下 LogProcessor 抽象类中定义的抽象方法：
+
+```java
+public abstract class LogProcessor {
+
+    /**
+     * 通过 GetRequest 获取日志消息
+     */
+    public abstract Response onRequest(GetRequest request);
+
+    /**
+     * 提交log
+     */
+    public abstract Response onApply(Log log);
+
+    /**
+     * 错误处理
+     */
+    public void onError(Throwable error) {
+    }
+
+    /**
+     * 为了使处理事务的状态机能够将日志路由到正确的 LogProcessor，LogProcessor需要具有标识信息
+     */
+    public abstract String group();
+```
+
+实际上 LogProcessor 抽象类中定义的抽象方法实际上就是对于实现 Raft 一致性协议中对于日志复制的代码翻译；回顾一下这几个方法和我们前面讲到的 Raft 算法中通过日志复制，包括日志条目读取、提交、错误处理等是否有相似之处？
+
+而 AP、CP 模式分别对应了 LogProcessor4AP、LogProcessor4CP 两个日志处理器抽象类来区分 AP、CP 模式下的日志处理器，源代码如下：
+
+```java
+// AP
+public interface APProtocol<C extends Config, P extends LogProcessor4AP> extends ConsistencyProtocol<C, P> {
+}
+
+// CP
+public abstract class LogProcessor4CP extends LogProcessor {
+    /**
+     * 发现快照处理程序
+     * 由 LogProcessor 自行决定选用哪个 SnapshotOperate 进行保存、加载操作
+     */
+    public List<SnapshotOperation> loadSnapshotOperate() {
+        return Collections.emptyList();
+    }
+
+}
+```
+
+由于 CP 模式在 Nacos 中是通过 JRaft 实现，本质上还是属于 Raft 算法的范畴，因此存在快照的概念，所以相比 AP 模式，CP 模式需要多一个加载快照处理程序的方法（如上面源码）。
+
+目前，Nacos 中通过 Derby 实现了快照存储的处理操作，具体实现后续会单独讲解。
+
+## 小结
+
+从前面我们先初步分析了 Nacos 中一致性协议层是怎样的，其实可以得出一下基本结论：
+
+* 通过定义一致性协议操作、一致性协议抽象、协议元数据抽象等接口定义了 Nacos 中一致性协议的基础框架
+* 通过定义 AP、CP 协议接口来对应具体的一致性协议实现
+* 通过定义统一的抽象日志处理器来规范实现一致性协议日志复制功能的相关操作
+
+最后我想强调一个技巧：**我们也可以借鉴前面讲解 Raft 时将一致性协议拆解为几个子问题从而到 Nacos 的源码中去找到答案**
 
