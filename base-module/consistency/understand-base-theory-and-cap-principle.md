@@ -2,7 +2,7 @@
 description: CAP：Consistency、Availability、Partition Tolerance
 ---
 
-# Base 理论与 CAP 原则
+# 理解 Base 理论与 CAP 原则
 
 ## 分布式一致性（Consensus）
 
