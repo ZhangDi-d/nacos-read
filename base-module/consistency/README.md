@@ -4,34 +4,28 @@ description: Big mouthfuls ofter choke.
 
 # Consistency 模块
 
-> consistency 模块代码层次结构
+## 模块结构
+
+> consistency 模块代码目录层次结构
 
 ```text
-E:.
-├─src
-│  ├─main
-│  │  ├─java
-│  │  │  └─com
-│  │  │      └─alibaba
-│  │  │          └─nacos
-│  │  │              └─consistency // consistency 包
-│  │  │                  │  CommandOperations.java // 操作维护命令界面接口
-│  │  │                  │  Config.java // 一致性协议关联对象配置
-│  │  │                  │  ConsistencyProtocol.java // 一致性协议抽象类
-│  │  │                  │  IdGenerator.java // ID生成器
-│  │  │                  │  LogProcessor.java // 功能模块使用一致性协议抽象处理器
-│  │  │                  │  ProtocolMetaData.java // 协议元数据
-│  │  │                  │  SerializeFactory.java // 序列化工厂类
-│  │  │                  │  Serializer.java // 序列化接口
-│  │  │                  ├─ap //  AP 协议
-│  │  │                  ├─cp // CP 协议
-│  │  │                  ├─entity // protobuf自动生成类
-│  │  │                  ├─exception // 异常
-│  │  │                  ├─serialize // 序列化
-│  │  │                  └─snapshot // 快照
-│  │  ├─proto // protobuf协议文件
-│  │  └─resources // 资源目录
-│  └─test // 测试目录
+➜  main git:(feature-1.3.1) tree -d
+.
+├── java
+│   └── com
+│       └── alibaba
+│           └── nacos
+│               └── consistency
+│                   ├── ap
+│                   ├── cp
+│                   ├── entity
+│                   ├── exception
+│                   ├── serialize
+│                   └── snapshot
+└── proto
+
+12 directories
+
 ```
 
 ## **模块依赖**
@@ -69,4 +63,19 @@ E:.
 * 引入的包在哪儿被使用？
 
 关于上面的问题将在模块的文章内陆续被讲到，请同学们耐住性子继续往后看。
+
+## 问题列表
+
+* [x] 聊聊元组 Tuple（扩展知识）
+* [x] 详解 nacos 中的 IdGeneratorManager
+* [x] SPI 与 JDBC 驱动自动加载原理、 ServiceLoad 解析（扩展知识）
+* [x] 理解 Protobuf（扩展知识）
+* [x] 理解 Hessian（扩展知识）
+* [x] Base理论与 CAP 原则（扩展知识）
+* [x] 理解 Raft 算法（扩展知识）
+* [x] 蚂蚁金服开源 SOFAJRaft
+* [ ] 事件发布与订阅、观察者模式
+* [x] Nacos 中的一致性协议层
+
+
 

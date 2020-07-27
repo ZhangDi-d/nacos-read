@@ -15,35 +15,25 @@
 ## 基础模块 <a id="base-module"></a>
 
 * [Consistency 模块](base-module/consistency/README.md)
-  * [问题列表](base-module/consistency/issue-list.md)
   * [详解 IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
   * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
   * [一致性协议抽象层](base-module/consistency/consistency-in-nacos.md)
   * [JRaft 服务管理](base-module/consistency/jraft-maintain-service.md)
-* [API 模块](base-module/api/README.md)
-  * [问题列表](base-module/api/issue-list.md)
-* [Common 模块](base-module/common/README.md)
-  * [问题列表](base-module/common/issue-list.md)
+* [API 模块](base-module/api.md)
+* [Common 模块](base-module/common.md)
 
 ## 核心模块 <a id="core-module"></a>
 
-* [Client 模块](core-module/client/README.md)
-  * [问题列表](core-module/client/issue-list.md)
-* [Core 模块](core-module/core/README.md)
-  * [问题列表](core-module/core/issue-list.md)
-* [Cmdb 模块](core-module/cmdb/README.md)
-  * [问题列表](core-module/cmdb/issue-list.md)
+* [Client 模块](core-module/client.md)
+* [Core 模块](core-module/core.md)
+* [Cmdb 模块](core-module/cmdb.md)
 * [Naming 模块](core-module/naming/README.md)
   * [问题列表](core-module/naming/issue-list.md)
   * [NamingService 创建浅析](core-module/naming/naming-service-analysis.md)
-* [Config 模块](core-module/config/README.md)
-  * [问题列表](core-module/config/issue-list.md)
-* [Console 模块](core-module/console/README.md)
-  * [问题列表](core-module/console/issue-list.md)
-* [Address 模块](core-module/address/README.md)
-  * [问题列表](core-module/address/issue-list.md)
-* [Istio 模块](core-module/istio/README.md)
-  * [问题列表](core-module/istio/issue-list.md)
+* [Config 模块](core-module/config.md)
+* [Console 模块](core-module/console.md)
+* [Address 模块](core-module/address.md)
+* [Istio 模块](core-module/istio.md)
 
 ## 福利章 <a id="welfare-module"></a>
 
