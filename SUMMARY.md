@@ -28,7 +28,6 @@
 * [Core 模块](core-module/core.md)
 * [Cmdb 模块](core-module/cmdb.md)
 * [Naming 模块](core-module/naming/README.md)
-  * [问题列表](core-module/naming/issue-list.md)
   * [NamingService 创建浅析](core-module/naming/naming-service-analysis.md)
 * [Config 模块](core-module/config.md)
 * [Console 模块](core-module/console.md)
