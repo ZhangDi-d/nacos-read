@@ -2,7 +2,7 @@
 description: Birds of a feather flock together.
 ---
 
-# 详解Nacos中的IdGenerator
+# 详解 IdGenerator
 
 > 特别说明：本文剖析源码项目地址：[https://github.com/rexlin600/nacos](https://github.com/rexlin600/nacos)，注意使用 `feature-1.3.1` 分支
 

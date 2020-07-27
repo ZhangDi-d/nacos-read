@@ -131,7 +131,7 @@ SOFAJRaft 编译要求：
 
 > 如果还不清楚可以回过头看下前面的 Raft 算法
 
-{% page-ref page="understand-raft-algorithm.md" %}
+{% page-ref page="../../welfare-module/external-docs/understand-raft-algorithm.md" %}
 
 * **Endpoint**：一个服务地址（包括 IP、Port）；raft 不允许启动在 0.0.0.0 所有的 IPv4 上，需要明确指定启动的 IP 创建一个地址，如下：
   * ```text

@@ -16,11 +16,7 @@
 
 * [Consistency 模块](base-module/consistency/README.md)
   * [问题列表](base-module/consistency/issue-list.md)
-  * [详解Nacos中的IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
-  * [理解 Base 理论与 CAP 原则](base-module/consistency/understand-base-theory-and-cap-principle.md)
-  * [理解 Protobuf](base-module/consistency/protobuf.md)
-  * [理解 Hessian](base-module/consistency/hessian.md)
-  * [理解 Raft 算法](base-module/consistency/understand-raft-algorithm.md)
+  * [详解 IdGenerator](base-module/consistency/idgenerator-in-nacos.md)
   * [蚂蚁金服开源 SOFAJRaft](base-module/consistency/sofajraft.md)
   * [一致性协议抽象层](base-module/consistency/consistency-in-nacos.md)
   * [JRaft 服务管理实现](base-module/consistency/jraft-maintain-service.md)
@@ -55,4 +51,8 @@
   * [元组Tuple](welfare-module/external-docs/tuple.md)
   * [极简UML](welfare-module/external-docs/easy-uml.md)
   * [SPI与JDBC驱动加载原理](welfare-module/external-docs/spi-and-jdbc-auto-loading.md)
+  * [理解 Base 理论与 CAP 原则](welfare-module/external-docs/understand-base-theory-and-cap-principle.md)
+  * [理解 Protobuf](welfare-module/external-docs/protobuf.md)
+  * [理解 Hessian](welfare-module/external-docs/hessian.md)
+  * [理解 Raft 算法](welfare-module/external-docs/understand-raft-algorithm.md)
 
