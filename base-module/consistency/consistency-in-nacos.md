@@ -8,21 +8,11 @@ Nacos 在 1.3.0 重新构建了内核，修改内容比较大，这里我们主�
 1. **nacos 内部事件机制**
 2. **nacos 一致性协议层**
 3. **对于 AP 协议以及 CP 协议的统一抽象**
+
+注意：由于一致性协议涉及到 core 模块，所以这部分内容会提前讲到 core 模块的源码内容
 {% endhint %}
 
-前面讲了很多内容实际上都是为了接下来介绍 Nacos 中的一致性协议做准备，简单回顾一下：
-
-* **CAP、一致性协议理论**
-* **Protobuf**
-* **Hessian**
-* **Raft 算法**
-* **JRaft 算法：**建议反复阅读蚂蚁金服的 SOFAJRaft 指南，因为 Nacos 就是在它的基础上去实现的
-
-如果不了解前面讲的这些直接去理解 Nacos 的一致性协议抽象的话是非常困难的，尤其是你对 Raft 算法没有概念的情况下。
-
-这一部分内容会拆分为几章来讲，尽可能以小而清晰的篇幅来讲解，因为这一块儿内容可以说是 Nacos 的基石，需要大家花费大量的时间、精力去消化、吸收。
-
-_**注意：由于一致性协议涉及到 core 模块，所以这部分内容会提前讲到 core 模块的源码内容**_
+前面讲了很多内容实际上都是为了接下来介绍 Nacos 中的一致性协议做准备，简单回顾一下前面几个小节补充的一些理论知识，如果不了解前面讲的这些直接去理解 Nacos 的一致性协议抽象的话是非常困难的，尤其是你对 Raft 算法没有概念的情况下。这一部分内容会拆分为几章来讲，尽可能以小而清晰的篇幅来讲解，因为这一块儿内容可以说是 Nacos 的基石，需要大家花费大量的时间、精力去消化、吸收。
 
 ## Nacos 一致性协议层
 
@@ -31,11 +21,15 @@ _**注意：由于一致性协议涉及到 core 模块，所以这部分内容�
 * **最终一致性**
 * **强一致性**
 
-比如，在 naming 模块中，需要用到 AP、CP，而在 confg 模块则需要用到 CP。基于并结合之前 Nacos 的一些历史包袱最终 Nacos 团队采取了使用 JRaft 来作为一致性协议的选型，当然不排除后期可能会自己实现。基于此，Nacos 在 `1.3.0` 全新的内核构建中有了下面的最新一致性协议设计，UML 图如下（下图省略了 `Config` 接口，后面会说明）：
+比如，在 naming 模块中，需要用到 AP、CP，而在 confg 模块则需要用到 CP。
+
+基于并结合之前 Nacos 的一些历史包袱最终 Nacos 团队采取了使用 JRaft 来作为一致性协议的选型，当然不排除 Nacos 团队后期可能会自己实现一致性协议。
+
+基于此，Nacos 在 `1.3.0` 全新的内核构建中有了下面的最新一致性协议设计，UML 图如下（省略了 `Config` 接口）：
 
 ![nacos-consitency-abstract](../../.gitbook/assets/nacos-consistency-abstract.jpg)
 
-先总体描述一下上图一致性协议抽象的 UML 图，方便大家先对 Nacos 一致性协议的抽象有个总体概念，然后我们在逐一分析每个接口、类的作用。
+接下来我们先总体描述一下上图一致性协议抽象的 UML 图中涉及的接口、抽象类，方便大家先对 Nacos 一致性协议的抽象有个总体概念，然后我们在逐一分析每个接口、类的作用。
 
 ## 总体描述
 
@@ -62,8 +56,7 @@ CommandOperations 接口提供了一个 接收 Map 类型的 commands 的 execut
 public interface CommandOperations {
 
     /**
-     * 操作维护界面操作入口
-     *
+     * 操作维护入口
      */
     default RestResult<String> execute(Map<String, String> commands) {
         return RestResultUtils.success();
@@ -72,7 +65,7 @@ public interface CommandOperations {
 
 ```
 
-可以通过前面的 UML 看出，目前 Nacos 中 **JRaftProtocol** 这个类最终实现了一致性协议（CP 模式），关于 **JRaftProtocol** 的实现我们在后面的章节再讨论。
+可以通过前面的 UML 看出，**JRaftProtocol** 这个类最终实现了一致性协议（CP 模式）。
 
 总之，CommandOperations 接口是为了给底层实现一致性协议的实现类提供了用于操作、维护 raft group 的实现定义，由于现在 Nacos 采用的是 JRaft 作为底层的一致性协议具体实现，因此这个操作维护 raft group 也是借助 JRaft 的 CliServer 实现的（后面的章节会说明）。
 
@@ -80,7 +73,7 @@ _**换句话说：Raft 协议是针对 CP 模式使用的，因此 AP 模式不�
 
 ### 一致性协议接口
 
-ConsistencyProtocol 是 Nacos 一致性协议的高层抽象，定义了以下接口
+ConsistencyProtocol 是 Nacos 一致性协议的高层抽象，定义了以下方法：
 
 * 一致性协议初始化
 * 增加日志条目处理器
@@ -89,7 +82,7 @@ ConsistencyProtocol 是 Nacos 一致性协议的高层抽象，定义了以下�
 * 集群成员变更
 * 关闭一致性协议服务
 
-这个接口内部可接收上界为 Config 的配置，上界为 LogProcessor 的日志处理器；此外，该接口还继承了 CommandOperations 接口提供了对于 raft froup 的服务管理，ConsistencyProtocol 的核心源码如下：
+这个接口内部可接收上界为 Config 的配置、上界为 LogProcessor 的日志处理器；此外，该接口还继承了 CommandOperations 接口提供了对于 raft froup 的服务管理，ConsistencyProtocol 的核心源码如下：
 
 ```java
 public interface ConsistencyProtocol<T extends Config, P extends LogProcessor> extends CommandOperations {
