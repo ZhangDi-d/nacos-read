@@ -37,7 +37,7 @@ _**注意：由于一致性协议涉及到 core 模块，所以这部分内容�
 
 先总体描述一下上图一致性协议抽象的 UML 图，方便大家先对 Nacos 一致性协议的抽象有个总体概念，然后我们在逐一分析每个接口、类的作用。
 
-### 总体描述
+## 总体描述
 
 {% hint style="success" %}
 针对 Nacos 中一致性协议抽象的整体描述，可参考上面的 UML 图
@@ -144,7 +144,7 @@ public interface ConsistencyProtocol<T extends Config, P extends LogProcessor> e
 
 ### CPProtocol 与 APProtocol 接口
 
-这两个接口分别定义了 Nacos 中 CP、AP 模式下，一致性协议的定义，如下：
+这两个接口都集成自 ConsistencyProtocol，二者分别定义了 Nacos 中 CP、AP 模式下，一致性协议的定义，如下：
 
 ```java
 // APProtocol
@@ -163,7 +163,7 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
 }
 ```
 
-二者唯一不同的点在于 CP 模式采用的是 JRaft 实现，而 Raft 一致性协议中存在 Leader、Follower 的概念，所以需要额外提供一个 `isLeader()` 的方法用来返回此节点是否为 Leader 节点。
+唯一不同的点在于 CP 模式采用的是 JRaft 实现，而 Raft 一致性协议中存在 Leader、Follower 的概念，所以 CPProtocol 需要额外提供一个 `isLeader()` 的方法用来返回此节点是否为 Leader 节点。
 
 ### ProtocolMetaData  final 类
 
@@ -182,12 +182,14 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
     * key为groupId、value为报错了leader、term、集群信息的Map
     */
    private Map<String, MetaData> metaDataMap = new ConcurrentHashMap<>(4);
-```
-
-可以看到 Value 是一个 MetaData 对象，如下：
-
-```java
- public static final class MetaData {
+   
+   
+   // ...
+   
+   /**
+    * MetaData 内部维护的是一个 Map、group
+    */
+   public static final class MetaData {
 
         /**
          * 初始容量为 8 的 ConcurrentHashMap
@@ -198,10 +200,10 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
   
         // 省略其他方法 ...
                     
- }
+   }
 ```
 
-而 MetaData 对象中维护的 itemMap 的 value 是一个 ValueItem 对象，这个 ValueItem 对象结构如下：
+而 MetaData 对象中维护的 itemMap 的 value 是一个 key 为字符串，value 为 ValueItem 对象的 Map，这个 ValueItem 对象结构如下：
 
 ```java
  public static final class ValueItem extends Observable {
@@ -243,8 +245,6 @@ public interface CPProtocol<C extends Config, P extends LogProcessor4CP> extends
 ```
 
 🌠 相当于我们的 ProtocolMetaData 的 metaDataMap 本身是一个初始容量为 4 的 Map，其 value 是一个 MetaData 对象；这个 MetaData 对象内部有一个 itemMap，这个 itemMap 是一个初始容量为 8 的 Map，并且这个 Map 的 value 是一个 ValueItem 对象。
-
-
 
 ### AbstractConsistencyProtocol 抽象类
 
@@ -288,6 +288,8 @@ public abstract class AbstractConsistencyProtocol<T extends Config, L extends Lo
 
 }
 ```
+
+可以看见，这个类实际上是将一致性协议的元数据抽象出来作为了一致性协议的基类；不同的一致性协议可以通过继承它从而实现对协议元数据的管理、可以获取或重载日志处理器
 
 
 
