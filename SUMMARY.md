@@ -45,4 +45,5 @@
   * [理解 Protobuf](welfare-module/external-docs/protobuf.md)
   * [理解 Hessian](welfare-module/external-docs/hessian.md)
   * [理解 Raft 算法](welfare-module/external-docs/understand-raft-algorithm.md)
+  * [Apache Derby](welfare-module/external-docs/apache-derby.md)
 
