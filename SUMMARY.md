@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Introduction](README.md)
+* [简介](README.md)
 * [基本概念与架构](basic-concepts-and-architecture/README.md)
   * [基本概念](basic-concepts-and-architecture/concept.md)
   * [逻辑架构](basic-concepts-and-architecture/nacos-arch.md)

@@ -2,7 +2,7 @@
 description: nacos source code read
 ---
 
-# Introduction
+# 简介
 
 欢迎来到 `Nacos` 的世界！
 
