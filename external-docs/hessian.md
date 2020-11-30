@@ -25,11 +25,11 @@ description: Hessian 是一个基于 HTTP 协议传输，使用二进制序列�
   * 通信框架：MINA、Netty
 * **RPC 框架核心功能主要由 5 个部分组成：客户端、客户端 Sub、网络传输模块、服务端 Stub、服务端等**
 
-![rpc-core](../../.gitbook/assets/rpc-core.jpg)
+![rpc-core](../.gitbook/assets/rpc-core.jpg)
 
 * **完整的 RPC 框架包含了诸如：服务发现、负载均衡、容错、网络传输、序列化等组件，其中 RPC 协议就是指明了程序如何进行网络传输和序列化** （完整的 RPC 框架架构图如下）
 
-![rpc](../../.gitbook/assets/rpc.jpg)
+![rpc](../.gitbook/assets/rpc.jpg)
 
 * RPC 框架的核心功能就是实现上图 RPC 协议的重要部分
 
@@ -67,7 +67,7 @@ description: Hessian 是一个基于 HTTP 协议传输，使用二进制序列�
 * **HessianSerializer 实现类**中维护了一个由 Hessian 提供的 **com.caucho.hessian.io.SerializerFactory** 来管理实现序列化和反序列化
 * **Nacos 自己维护了一个 SerializerFactory 来创建和管理在 Nacos 中的所有的 Serialzer 实现**
 
-![nacos-hessian-serial](../../.gitbook/assets/nacos-hessian-serial.jpg)
+![nacos-hessian-serial](../.gitbook/assets/nacos-hessian-serial.jpg)
 
 ### Hessian 序列化、反序列化在 Nacos 中的应用
 

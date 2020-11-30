@@ -37,7 +37,7 @@ Raft 算法将系统中的角色分为几个部分（_注：图片来自互联�
 * **Follower**：接受并持久化 Leader 同步的日志，在 Leader 告知日志可以提交后提交日志
 * **Candiadte**：Leader 选举过程中的临时角色
 
-![raft-role](../../.gitbook/assets/raft-role.jpg)
+![raft-role](../.gitbook/assets/raft-role.jpg)
 
 ## Message 的三种类型
 
@@ -59,7 +59,7 @@ Raft 算法将系统中的角色分为几个部分（_注：图片来自互联�
 * 如果选举失败，这个任期内就会因为没有 Leader 产生而结束；
 * 此外，任期之间的切换可以在不同的时间、不同服务器上观察到。
 
-![raft-term](../../.gitbook/assets/raft-term.jpg)
+![raft-term](../.gitbook/assets/raft-term.jpg)
 
 
 
@@ -77,11 +77,11 @@ Raft 要求系统在任意时刻最多只能有一个 Leader，正常工作期�
 * 此时收到大多数服务器投票的 Candidate 会成为新的 Leader
   * 如果经由投票产生的 Leader 发现在更早的 term 已经产生了一个 Leader 则此时它会转变为 Follower
 
-![raft-role-change](../../.gitbook/assets/raft-election.jpg)
+![raft-role-change](../.gitbook/assets/raft-election.jpg)
 
 > 如果你需要动态的查看选举这样的流程，可以参考文末的链接 [The Raft Consensus Algorithm](https://raft.github.io/)，它提供了一个选举的动画可以帮助你理解、消化 Raft 的选举流程（_注：图片来自互联网_）。
 
-![](../../.gitbook/assets/raft-election-gif.jpg)
+![](../.gitbook/assets/raft-election-gif.jpg)
 
 {% hint style="danger" %}
 此外，需要特别指出的几点：
@@ -95,7 +95,7 @@ Raft 要求系统在任意时刻最多只能有一个 Leader，正常工作期�
 
 日志的数据结构总总体上可以分为：**term**（任期号）、**command**（状态机需要执行的指令内容）、**index**（索引，日志条目在日志中的位置），日至结构图如下：
 
-![log-struc](../../.gitbook/assets/log-struc.jpg)
+![log-struc](../.gitbook/assets/log-struc.jpg)
 
 如上图所示，总共有 12 条日志条目，其中：
 
@@ -114,7 +114,7 @@ Raft 要求系统在任意时刻最多只能有一个 Leader，正常工作期�
 
 \*\*\*\*🌠 **如果某些 Follower 可能没有成功的复制日志（比如 Follower 宕机了），Leader 会无限的重试直到所有 Follower 最终存储了所有日志条目**（_注：图片来自互联网_）
 
-![raft-log](../../.gitbook/assets/raft-log.jpg)
+![raft-log](../.gitbook/assets/raft-log.jpg)
 
 Raft 维护着以下日志机制从而维护一个不同服务器的日志之间的高层次的一致性：
 
@@ -132,7 +132,7 @@ Raft 安全性限制：
 
 我们来探讨即使满足 **选举限制** 这一条件依然不能保证一致性的情况，首先看下图（_注：图片来自互联网_）
 
-![election-safty](../../.gitbook/assets/raft-election-saftey.jpg)
+![election-safty](../.gitbook/assets/raft-election-saftey.jpg)
 
 * \(a\)  S1是Leader，并且部分地复制了 index-2；
 * \(b\)  S1宕机，S5得到S3、S4、S5的投票当选为新的Leader（S2不会选择S5，因为S2的日志较S5新），并且在index-2写入到一个新的条目，此时是term=3（注：之所以是term=3，是因为在term-2的选举中，S3、S4、S5至少有一个参与投票，也就是至少有一个知道term-2，虽然他们没有term-2的日志）；
@@ -162,11 +162,11 @@ Raft 采用对整个系统进行 snapshot 来解决日志压缩，snapshot 之�
 
 成员变更是指在集群运行过程中副本发生变化，因为在各个服务器提交成员变更的时刻可能不同，造成各个服务器从旧成员配置（Cold）切换到新成员配置（Cnew）的时刻不同，所以在这个过程中可能会出现在成员变更的某个时刻，因为 Cold、Cnew 中同时存在两个不相交的多数派，这样的话可能会造成产生多个 Leader，进而行程了不同的决议，破坏了安全性，如下图（_注：图片来自互联网_）：
 
-![cold-and-cnew](../../.gitbook/assets/cold-and-cnew.jpg)
+![cold-and-cnew](../.gitbook/assets/cold-and-cnew.jpg)
 
 为了解决上面的问题，Raft 提出了两阶段的成员变更方法！两阶段成员变更过程如下（_注：图片来自互联网_）：
 
-![raft-2pc](../../.gitbook/assets/raft-2pc.jpg)
+![raft-2pc](../.gitbook/assets/raft-2pc.jpg)
 
 1. Leader 收到成员变更请求从 Cold 切成 Cnew；
 2. Leader 在本地生成一个新的 log entry，其内容是 Cold∪Cnew，代表当前时刻新旧成员配置共存，写入本地日志，同时将该 log entry 复制至 Cold∪Cnew 中的所有副本。在此之后新的日志同步需要保证得到 Cold 和 Cnew 两个多数派的确认；

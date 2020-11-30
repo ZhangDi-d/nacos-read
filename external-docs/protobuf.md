@@ -53,7 +53,7 @@ message SearchRequest {
 {% tab title="数据类型" %}
 > Protobuf 中指定的类型与对应语言生成的**数据类型参照表**（简版）
 
-![](../../.gitbook/assets/protobuff-type.png)
+![](../.gitbook/assets/protobuff-type.png)
 {% endtab %}
 
 {% tab title="默认值" %}

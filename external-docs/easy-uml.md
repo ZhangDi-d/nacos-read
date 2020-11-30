@@ -21,7 +21,7 @@ description: All things in their being are good for something.
 
 泛化关系（`is-a`，表示 .. 是 .. 的关系）使用一条带空心的实线箭头表示，如下图（A 继承自 B）：
 
-![](../../.gitbook/assets/screenshot_1594803009203.png)
+![](../.gitbook/assets/screenshot_1594803009203.png)
 
 **实现关系（realize）**
 
@@ -29,7 +29,7 @@ description: All things in their being are good for something.
 
 实现关系使用一条待空心的虚线箭头表示，如下图：
 
-![](../../.gitbook/assets/screenshot_1594803207527.png)
+![](../.gitbook/assets/screenshot_1594803207527.png)
 
 **聚合关系（aggregation）**
 
@@ -37,7 +37,7 @@ description: All things in their being are good for something.
 
 聚合关系（表示 B 由 A 组成，弱依赖）使用一条带空心的菱形箭头表示，如下图：
 
-![](../../.gitbook/assets/screenshot_1594803216517.png)
+![](../.gitbook/assets/screenshot_1594803216517.png)
 
 **组合关系（composition）**
 
@@ -45,7 +45,7 @@ description: All things in their being are good for something.
 
 组合关系（表示 B 由 A 组成，强依赖）使用一条带实心的菱形箭头表示，如下图：
 
-![](../../.gitbook/assets/screenshot_1594803333310.png)
+![](../.gitbook/assets/screenshot_1594803333310.png)
 
 **关联关系（association）**
 
@@ -53,7 +53,7 @@ description: All things in their being are good for something.
 
 关联关系是用一条直线表示的，如下图：
 
-![](../../.gitbook/assets/screenshot_1594803403719.png)
+![](../.gitbook/assets/screenshot_1594803403719.png)
 
 **依赖关系（dependency）**
 
@@ -61,5 +61,5 @@ description: All things in their being are good for something.
 
 依赖关系（表示 A 依赖于 B）是用一套带箭头的虚线表示的，如下图：
 
-![](../../.gitbook/assets/screenshot_1594803438895.png)
+![](../.gitbook/assets/screenshot_1594803438895.png)
 

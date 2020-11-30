@@ -8,7 +8,7 @@ description: Birds of a feather flock together.
 
 本文主要讨论的是目前 `Nacos` 中的雪花 `ID` 生成算法（`snwoflake` 算法），该算法最初是由 `Twitter` 开源的一种 `ID` 生成算法，其生成的 `ID` 结构如下：
 
-![](../../.gitbook/assets/screenshot_1594797318373.png)
+![](../.gitbook/assets/screenshot_1594797318373.png)
 
 即生成的 `ID` 分为四个部分，如下：
 
@@ -32,7 +32,7 @@ description: Birds of a feather flock together.
 
 在 `consistency` 模块中定义了一个 `IdGenerator` 接口，其实现与管理器在 `core` 目录下，但是既然在 `consistency` 模块看到了这个接口，那么我们还是来聊一下这个 `ID 生成器` ，它的 `UML` 图如下：
 
-![](../../.gitbook/assets/screenshot_1594797735533.png)
+![](../.gitbook/assets/screenshot_1594797735533.png)
 
 * `SnowFlowerIdGenerator` 实现了 `IdGenerator` 接口
 * `IdGeneratorManager` 由 `IdGenerator` 组合并负责创建 `SnowFlowerIdGenerator` 实现类
@@ -47,7 +47,7 @@ description: Birds of a feather flock together.
 
 我们首先来看下 `IdGenerator` 的定义：
 
-![](../../.gitbook/assets/screenshot_1594799843737.png)
+![](../.gitbook/assets/screenshot_1594799843737.png)
 
 接口相对比较简单，非常常规的 `IdGenerator` 的定义（从这个设计上也可以看出以后 `Nacos` 可能可能会采用其他的 `ID 生成器` 的实现），核心还是在其实现类 `SnowFlowerIdGenerator` 上
 
@@ -606,7 +606,7 @@ public class StandaloneProfileApplicationListener
 
 经过前面的分析，我们知道程序最终执行到了 `EmbeddedStoragePersistServiceImpl` 的 `init()` 方法，并执行了 `IdGeneratorManager.register()` 方法，如下（单机模式下所有 `SnowFlowerIdGenerator` 对应的 `workerId` 都一致）：
 
-![](../../.gitbook/assets/screenshot_1594816832829.png)
+![](../.gitbook/assets/screenshot_1594816832829.png)
 
 后续需要使用雪花算法生成 `ID` 的地方直接调用 `nextId()` 方法，传入注册时对应的 `resource_name` 即可，如下：
 

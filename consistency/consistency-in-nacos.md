@@ -31,7 +31,7 @@ Nacos 在 1.3.0 重新构建了内核，修改内容比较大，这里我们主�
 
 基于此，Nacos 在 `1.3.0` 全新的内核构建中有了下面的最新一致性协议设计，UML 图如下（省略了 `Config` 接口）：
 
-![nacos-consitency-abstract](../../.gitbook/assets/nacos-consistency-abstract.jpg)
+![nacos-consitency-abstract](../.gitbook/assets/nacos-consistency-abstract.jpg)
 
 接下来我们先总体描述一下上图一致性协议抽象的 UML 图中涉及的接口、抽象类，方便大家先对 Nacos 一致性协议的抽象有个总体概念，然后我们在逐一分析每个接口、类的作用。
 
@@ -54,7 +54,7 @@ Nacos 在 1.3.0 重新构建了内核，修改内容比较大，这里我们主�
 
 从目前的 Nacos 一致性协议实现上来看，只有 CP 模式实现了这个接口，我们可以看下这个接口相关的 UML 图：
 
-![command-operaions](../../.gitbook/assets/commandoperations.jpg)
+![command-operaions](../.gitbook/assets/commandoperations.jpg)
 
 CommandOperations 接口提供了一个 接收 Map 类型的 commands 的 execute\(\) 方法；这个接口抽象了一致性协议实现类去管理 raft group 服务的操作，接口定义如下：
 

@@ -10,7 +10,7 @@ description: Difficult circumstances serve as a textbook of life for people.
 
 > 图片来源于网络
 
-![](../../.gitbook/assets/screenshot_1594868132636.png)
+![](../.gitbook/assets/screenshot_1594868132636.png)
 
 实际上就是 `基于接口的编程 + 策略模式 + 配置文件` 组合实现的动态加载机制。也就是说在我们的模块装配的时候能不再程序里动态指明，这就需要一种服务发现机制，而 `Java SPI` 就提供了这样的一套机制：
 
@@ -33,7 +33,7 @@ description: Difficult circumstances serve as a textbook of life for people.
 
 > 图片来自 [JDBC数据库驱动及原理](https://blog.csdn.net/use_admin/article/details/89416172?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase)
 
-![](../../.gitbook/assets/screenshot_1594869939468.png)
+![](../.gitbook/assets/screenshot_1594869939468.png)
 
 **回顾：JDBC连接数据库**
 
@@ -343,7 +343,7 @@ private static void loadInitialDrivers() {
 
 这里补充一下： **在JDBC 4.0之后实际上我们不需要再调用Class.forName来加载驱动程序了**，因此我们可以在自己选择的第三方数据库厂商提供的 connector jar 包下的 `META-INF/services` 目录下可以看到一个 `java.sql.Driver` 的文件，如下：
 
-![](../../.gitbook/assets/screenshot_1594879455481.png)
+![](../.gitbook/assets/screenshot_1594879455481.png)
 
 在我们集成第三方数据源时，程序启动后，经过一系列初始化后会 `加载数据源配置`（我使用的是 `HikariCP` 数据源），此时会在 `HikariConfig` 中的 `setDriverClassName()` 方法中有这样一行实例化驱动的代码：
 
@@ -360,7 +360,7 @@ private static void loadInitialDrivers() {
 
 这个实例化方法经过反射调用到了我们集成的 JDBC 驱动，从而引发了 `DriverManager` 的静态代码执行，完成后续初始化（也就是前面讲的剖析的 JDBC 的加载原理了）。我们借助 IDE 启动时可以在 DriverManager 的 `loadInitialDrivers();` 方法上打上断点然后 Debug，然后分析 Threads 信息如下：
 
-![](../../.gitbook/assets/screenshot_1594887286726.png)
+![](../.gitbook/assets/screenshot_1594887286726.png)
 
 这样，我们知道了 **驱动在什么时候会被自动加载**，而这种自动加载驱动的技术方案就叫 `SPI`
 

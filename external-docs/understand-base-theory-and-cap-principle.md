@@ -12,7 +12,7 @@ description: CAP：Consistency、Availability、Partition Tolerance
 
 通过一个形象的比喻来阐述分部署一致性（_注：图片来自互联网_）：
 
-![consensus](../../.gitbook/assets/consensus.jpg)
+![consensus](../.gitbook/assets/consensus.jpg)
 
 实际上，如果一个分布式系统非常稳定的话，解决分布式一致性问题相对简单的多。但是**实际上分布式系统一般都是基于消息传递的异步分布式系统，进程可能会因为各种因素产生诸如延时、被杀死、重启，在这个过程中消息可能会延迟、丢失、重复、乱序等等**。
 
@@ -26,7 +26,7 @@ description: CAP：Consistency、Availability、Partition Tolerance
 
 
 
-![state-machine](../../.gitbook/assets/state-machine.jpg)
+![state-machine](../.gitbook/assets/state-machine.jpg)
 
 ## **多副本状态机**
 
@@ -40,7 +40,7 @@ description: CAP：Consistency、Availability、Partition Tolerance
 
 多副本状态机的每个副本上都保存有完全相同的操作日志，保证所有状态机副本按照相同的顺序执行相同的操作，这样由于状态机是确定性的，则会得到相同的状态，多副本状态机结构如下（_注：图片来自互联网_）：
 
-![state-machine](../../.gitbook/assets/state-machine.jpg)
+![state-machine](../.gitbook/assets/state-machine.jpg)
 
 可以看到，在每个服务器中保存一系列命名，所有状态机副本都按照相同的顺序执行，分布式一致性算法管理着来自客户端的包含状态机命令的日志复制，每条日志以同样的顺序保存同样的命令，因此每个状态机执行同样的命令序列。**分布式一致性算法保证了复制到各个服务器的日志的一致性，这样也就保证了服务器的一致性，从而保证数据值的最终确定性是一致的。**
 
@@ -56,7 +56,7 @@ CAP 原则也叫 CAP 定理，他描述的是在一个分布式系统中 CAP 的
 * 可用性（**Availability**）：在分布式系统中，集群中的部分节点故障后，真个集群是否还能正常的响应客户端的请求
 * 分区容错性（**Partition Tolerance**）：在分布式系统中，如果在同一时刻无法满足数据一致性，就意味着发生了分区，这时候就必须在 C 与 A 见做出选择（_注：图片来自互联网_）
 
-![cap](../../.gitbook/assets/cap.png)
+![cap](../.gitbook/assets/cap.png)
 
 如上图所示，分布式系统只能是 AP、CP、CA 这三种情况！
 
